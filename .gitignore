@@ -60,3 +60,4 @@ humm.txt
 
 # TypeScript incremental build info
 frontend/tsconfig.tsbuildinfo
+.git_dir
