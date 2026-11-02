@@ -110,9 +110,9 @@ export function AttackProgressionSynthesis({
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/60 pb-2.5">
         <div className="flex items-center gap-2 min-w-0">
-          <ShieldAlert className="h-4 w-4 text-warning shrink-0 animate-pulse" />
+          <ShieldAlert className="h-4 w-4 text-warning shrink-0" />
           <h3 className="ba-text-xs font-bold uppercase tracking-wider text-foreground truncate">
-            Autonomous Multi-Stage Intrusion Synthesis
+            Intrusion Progression & Kill Chain Analysis
           </h3>
           <Chip tone={velocity.criticalMilestonesCount > 0 ? "destructive" : "warning"}>
             {velocity.activeStageLabel}

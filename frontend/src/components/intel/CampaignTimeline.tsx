@@ -61,7 +61,7 @@ export function CampaignTimeline({
                         {camp.name}
                       </span>
                       {camp.active && (
-                        <span className="inline-flex items-center gap-1 rounded bg-rose-500/20 px-1.5 py-0.5 font-mono ba-text-3xs font-semibold text-rose-300 animate-pulse">
+                        <span className="inline-flex items-center gap-1 rounded bg-rose-500/20 px-1.5 py-0.5 font-mono ba-text-3xs font-semibold text-rose-300">
                           Active Monitoring
                         </span>
                       )}

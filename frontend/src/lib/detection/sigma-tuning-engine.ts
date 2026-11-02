@@ -542,7 +542,7 @@ export function tuneQueryToSigma(query: string, options?: TuningOptions): TunedS
   ];
 
   const description = mitre
-    ? `Autonomous detection tuned from SIEM threat hunting query targeting ${mitre.techniqueName} (${mitre.techniqueId}).`
+    ? `Detection rule tuned from SIEM threat hunting query targeting ${mitre.techniqueName} (${mitre.techniqueId}).`
     : `Production Sigma rule synthesized from enterprise hunting pattern (${dialect.toUpperCase()}).`;
 
   const yaml = formatSigmaYaml({
@@ -550,7 +550,7 @@ export function tuneQueryToSigma(query: string, options?: TuningOptions): TunedS
     id: ruleId,
     status: "test",
     description,
-    author: "BeyondLabs Threat Hunting & Auto-Tuning Engine",
+    author: "BeyondLabs Detection Engineering",
     date: dateStr,
     references: mitre ? [`https://attack.mitre.org/techniques/${mitre.techniqueId}/`] : [],
     tags,
@@ -570,7 +570,7 @@ export function tuneQueryToSigma(query: string, options?: TuningOptions): TunedS
     name: title,
     status: "test",
     description,
-    author: "BeyondLabs Threat Hunting & Auto-Tuning Engine",
+    author: "BeyondLabs Detection Engineering",
     date: dateStr,
     references: mitre ? [`https://attack.mitre.org/techniques/${mitre.techniqueId}/`] : [],
     tags,

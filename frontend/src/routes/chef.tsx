@@ -9,7 +9,7 @@ import {
   ChefHat, Search, Star, X, GripVertical, Copy, Check, Eraser, Trash2,
   ArrowDown, ArrowUp, RotateCcw, FileDown, BookMarked,
   Clock, ArrowDownToLine, ArrowUpFromLine, Settings2, Upload, Download, Send, AlertTriangle,
-  WrapText, Database, FileText, Sparkles, Activity, Layers,
+  WrapText, Database, FileText, Binary, Activity, Layers,
 } from "lucide-react";
 import OPS, { OP_BY_ID, DEFAULT_FAVS, CATEGORIES, type Op, type RecipeStep } from "@/lib/chef-ops";
 import { calculateEntropy } from "@/lib/chef/entropy";
@@ -427,7 +427,7 @@ function ChefPage() {
               className="inline-flex items-center gap-1 rounded-md border border-primary/40 bg-primary/10 px-2.5 py-1 text-mono ba-text-2xs text-primary hover:bg-primary/20"
               title="Load battle-tested SOC deobfuscation recipe presets"
             >
-              <Sparkles className="h-3 w-3" /> presets
+              <Layers className="h-3 w-3" /> presets
             </button>
             {showPresets && (
               <>
@@ -722,7 +722,7 @@ function ChefPage() {
             {magicDetection.detected && (
               <div className="flex items-center justify-between border-b border-primary/30 bg-primary/10 px-3 py-1.5 text-mono ba-text-2xs text-primary">
                 <div className="flex items-center gap-1.5 truncate">
-                  <Sparkles className="h-3.5 w-3.5 shrink-0 text-primary" />
+                  <Binary className="h-3.5 w-3.5 shrink-0 text-primary" />
                   <span className="font-semibold truncate">
                     Magic: {magicDetection.signature} ({magicDetection.magicHex}) — {magicDetection.description}
                   </span>

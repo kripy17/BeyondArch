@@ -131,7 +131,7 @@ export function CrossCaseAttackGraph({
       {/* Header & Blast Radius Telemetry */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-3">
         <div className="flex items-center gap-2 min-w-0">
-          <Network className="h-5 w-5 text-primary shrink-0 animate-pulse" />
+          <Network className="h-5 w-5 text-primary shrink-0" />
           <div>
             <h3 className="ba-text-sm font-bold uppercase tracking-wider text-foreground">
               Cross-Case Intrusion Correlation Matrix

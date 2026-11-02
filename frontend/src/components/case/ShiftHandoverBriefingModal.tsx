@@ -9,7 +9,6 @@ import {
   ShieldAlert,
   ShieldCheck,
   AlertTriangle,
-  Flame,
   FileText,
   Activity,
   UserCheck,
@@ -110,7 +109,7 @@ export function ShiftHandoverBriefingModal({
                   className={cn(
                     "text-[10px] font-mono px-2 py-0.5 rounded-full font-bold uppercase tracking-wider border",
                     metrics.defconColor === "destructive"
-                      ? "bg-destructive/15 text-destructive border-destructive/40 animate-pulse"
+                      ? "bg-destructive/15 text-destructive border-destructive/40"
                       : metrics.defconColor === "warning"
                       ? "bg-amber-500/15 text-amber-400 border-amber-500/40"
                       : "bg-emerald-500/15 text-emerald-400 border-emerald-500/40"
@@ -230,7 +229,7 @@ export function ShiftHandoverBriefingModal({
                 <div className="rounded-xl border border-border/80 bg-card p-3.5 space-y-1">
                   <div className="flex items-center justify-between text-muted-foreground">
                     <span className="text-[11px] font-semibold uppercase tracking-wider">MTTD (Dwell)</span>
-                    <Flame className="h-4 w-4 text-amber-400" />
+                    <Activity className="h-4 w-4 text-amber-400" />
                   </div>
                   <div className="text-2xl font-bold tracking-tight text-amber-400 font-mono">
                     {metrics.mttdFormatted}
@@ -326,7 +325,7 @@ export function ShiftHandoverBriefingModal({
                                 "text-[10px] font-mono px-2 py-0.5 rounded border",
                                 c.isContained
                                   ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
-                                  : "bg-destructive/20 text-destructive border-destructive/40 animate-pulse"
+                                  : "bg-destructive/20 text-destructive border-destructive/40"
                               )}
                             >
                               {c.isContained ? "CONTAINED" : "UNCONTAINED"}

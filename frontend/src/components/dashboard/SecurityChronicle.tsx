@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   Activity, Bell, Target, Folder, Terminal, Search, ArrowUpRight,
-  Filter, Layers, ShieldAlert, Sparkles
+  Filter, Layers, ShieldAlert
 } from "lucide-react";
 import type { TimelineEvent } from "@/lib/timeline";
 import type { AlertLedgerEntry } from "@/lib/alerts/ingest";

@@ -21,7 +21,7 @@ import { Plus, Copy, Download, Trash2, FileText, Tag, X, Pin, Bug,
   ArrowRight, Database, Pencil, Check, FolderOpen, ClipboardList,
   Search, SearchX, ShieldAlert, Siren, GitBranch, Activity as ActivityIcon, Network, History,
   Paperclip, Clock, BookOpen, Printer, ExternalLink, RefreshCw, FileCode, CheckCircle2,
-  PanelRightClose, PanelRightOpen, Shield, Crosshair, Sparkles, Briefcase } from "lucide-react";
+  PanelRightClose, PanelRightOpen, Shield, Crosshair, Briefcase } from "lucide-react";
 import { CasePdfExportModal } from "@/components/case/CasePdfExportModal";
 import { ShiftHandoverBriefingModal } from "@/components/case/ShiftHandoverBriefingModal";
 import { CaseContextRail } from "@/components/case/CaseContextRail";
@@ -941,7 +941,7 @@ function CasePage() {
 
                   {/* State badge */}
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-border bg-surface-1 font-mono ba-text-3xs">
-                    <span className={`h-2 w-2 rounded-full ${active.state === "active" ? "bg-emerald-500 animate-pulse" : "bg-zinc-500"}`} />
+                    <span className={`h-2 w-2 rounded-full ${active.state === "active" ? "bg-emerald-500" : "bg-zinc-500"}`} />
                     <span className="font-semibold uppercase tracking-wider text-muted-foreground">
                       {active.state === "active" ? "Active Investigation" : "Closed"}
                     </span>

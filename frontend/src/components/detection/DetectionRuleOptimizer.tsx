@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import {
   Gauge, ShieldCheck, ShieldAlert, AlertTriangle, Copy, Check,
-  Terminal, Sparkles, Database, FileCode, CheckCircle2, Rocket, ArrowRight
+  Terminal, Database, FileCode, CheckCircle2, ArrowRight
 } from "lucide-react";
 import { Chip } from "@/components/soc";
 import { copyText } from "@/lib/copy";
@@ -172,7 +172,7 @@ process where event.type == "start" and (
     // D. Google Chronicle YARA-L
     const chronicleQuery = `rule endpoint_suspicious_execution {
   meta:
-    author = "BeyondArch Autonomous Detection Engine"
+    author = "BeyondLabs Detection Engineering"
     description = "Detects execution matching ${keyword} with suspicious CLI flags"
     severity = "HIGH"
   events:
@@ -320,7 +320,7 @@ process where event.type == "start" and (
       {/* Pre-Deployment Canary Readiness Checklist */}
       <div className="rounded border border-border/60 bg-surface-0 p-2.5">
         <div className="flex items-center gap-1.5 text-muted-foreground ba-text-3xs uppercase font-bold mb-1.5">
-          <Rocket className="h-3 w-3 text-primary" />
+          <ShieldCheck className="h-3 w-3 text-primary" />
           <span>Production Canary Deployment Checklist</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 ba-text-3xs text-foreground">

@@ -9,7 +9,6 @@ import {
   Check,
   ExternalLink,
   Layers,
-  Sparkles,
 } from "lucide-react";
 import type { DiamondModel } from "@/lib/intel/threat-intel-engine";
 import { exportStix21Json } from "@/lib/intel/threat-intel-engine";
@@ -82,7 +81,7 @@ export function DiamondModelCard({ diamond, stixBundle, className }: DiamondMode
       {/* Interactive Vertex Filter Strip */}
       <div className="mt-3 flex flex-wrap items-center gap-1 text-mono ba-text-2xs">
         <span className="text-muted-foreground mr-1.5 flex items-center gap-1">
-          <Sparkles className="h-3 w-3 text-amber-400" /> Focus Vertex:
+          <Crosshair className="h-3 w-3 text-primary" /> Focus Vertex:
         </span>
         {(
           [

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { X, ShieldAlert, Sparkles, FolderPlus, ArrowRight, Tag, Layers, CheckCircle2, Siren, Cloud, Cpu, UserX } from "lucide-react";
+import { X, ShieldAlert, FolderPlus, ArrowRight, Tag, Layers, CheckCircle2, Siren, Cloud, Cpu, UserX } from "lucide-react";
 import type { Case, Entry } from "@/data/case";
 import { loadCases, saveCases, setActiveCaseId, newId, newCaseTitle } from "@/data/case";
 import { IR_TEMPLATES, type IrIncidentTemplate, instantiateCaseFromTemplate } from "@/lib/case-desk";
@@ -151,7 +151,7 @@ export function NewCaseModal({ open, onClose, onCaseCreated }: NewCaseModalProps
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <Sparkles className="h-3.5 w-3.5 text-primary" />
+              <Layers className="h-3.5 w-3.5 text-primary" />
               Enterprise IR Templates (Recommended)
             </button>
             <button

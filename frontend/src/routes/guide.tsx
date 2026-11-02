@@ -46,7 +46,6 @@ import {
   CheckSquare,
   Clock,
   Layers,
-  Sparkles,
   ExternalLink,
 } from "lucide-react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";

@@ -133,7 +133,7 @@ export function ActiveCaseSentinel({ cases }: ActiveCaseSentinelProps) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-subtle">
         <div className="flex items-start sm:items-center gap-3 min-w-0">
           <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-primary/50 bg-primary/15 text-primary shadow-sm">
-            <ShieldAlert className="h-5 w-5 animate-pulse" />
+            <ShieldAlert className="h-5 w-5" />
           </div>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">

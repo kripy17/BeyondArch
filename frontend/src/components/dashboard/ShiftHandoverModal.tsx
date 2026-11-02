@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, Copy, Check, Download, FileText, Sparkles } from "lucide-react";
+import { X, Copy, Check, Download, FileText } from "lucide-react";
 import { copyText } from "@/lib/copy";
 import { toast } from "sonner";
 

@@ -18,7 +18,7 @@ import {
 import "@xyflow/react/dist/style.css";
 import {
   X, Network, PackageOpen, Box, FileSearch, Siren, Crosshair, FolderOpen,
-  Radar, ShieldCheck, FlaskConical, Rocket, Bell, RotateCcw, Search, ZoomIn,
+  Radar, ShieldCheck, FlaskConical, Send, Bell, RotateCcw, Search, ZoomIn,
   BookmarkPlus, Bookmark, Camera, Globe,
 } from "lucide-react";
 import type { Case } from "@/data/case";
@@ -114,7 +114,7 @@ const KIND_STYLE: Record<NodeKind, { border: string; text: string; chip: string;
   mitre: { border: "border-accent/50", text: "text-accent", chip: "border-accent/40 bg-accent/10", icon: Radar },
   detection: { border: "border-success/40", text: "text-success", chip: "border-success/40 bg-success/10", icon: ShieldCheck },
   simulation: { border: "border-chart-1/50", text: "text-chart-1", chip: "border-chart-1/40 bg-chart-1/10", icon: FlaskConical },
-  deployment: { border: "border-chart-2/50", text: "text-chart-2", chip: "border-chart-2/40 bg-chart-2/10", icon: Rocket },
+  deployment: { border: "border-chart-2/50", text: "text-chart-2", chip: "border-chart-2/40 bg-chart-2/10", icon: Send },
   alert: { border: "border-chart-3/50", text: "text-chart-3", chip: "border-chart-3/40 bg-chart-3/10", icon: Bell },
   case: { border: "border-border", text: "text-foreground", chip: "border-border bg-surface-1", icon: FolderOpen },
 };

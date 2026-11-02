@@ -140,7 +140,7 @@ function OperationsHub() {
             <div className="flex flex-wrap items-center gap-2">
               {activeCase ? (
                 <div className="flex items-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs text-primary font-medium">
-                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-primary" />
                   <span>Targeting Case: {activeCase.title.slice(0, 24)}...</span>
                 </div>
               ) : (

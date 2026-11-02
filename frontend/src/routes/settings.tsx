@@ -10,7 +10,7 @@ import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  Palette, Type, Layers, Sliders, Pin, Eye, EyeOff, ArrowUp, ArrowDown, Sparkles,
+  Palette, Type, Layers, Sliders, Pin, Eye, EyeOff, ArrowUp, ArrowDown,
   RotateCcw, Trash2, Check, Tag, Download, Upload, Sun, Moon,
   LayoutGrid, Shield, Network, Wifi,
   type LucideIcon,
@@ -457,7 +457,7 @@ function SettingsPage() {
       </Panel>
 
       {/* MOTION + QOL */}
-      <Panel id="QL" label="motion & qol" icon={Sparkles}>
+      <Panel id="QL" label="motion & qol" icon={Sliders}>
         <div className="grid gap-3 sm:grid-cols-2">
           <Row label="Show breadcrumb" desc="Hide for the cleanest topbar.">
             <Switch checked={prefs.showBreadcrumb} onCheckedChange={(v) => setPrefs({ showBreadcrumb: v })} aria-label="Show breadcrumb" />

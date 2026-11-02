@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import {
   StickyNote, Search, GitBranch, Crosshair, Siren, Paperclip,
   Check, Copy, ExternalLink, ShieldAlert, Layers, ChevronRight,
-  ChevronDown, Plus, Sparkles, Clock, X
+  ChevronDown, Plus, Clock, X
 } from "lucide-react";
 import type { Case, EntryKind } from "@/data/case";
 import type { EntryAttachment } from "@/lib/attachments";

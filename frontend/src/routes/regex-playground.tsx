@@ -5,7 +5,7 @@ import { Chip, SendToRow } from "@/components/soc";
 import { EntitySection } from "@/components/entity";
 import {
   Search, Copy, Check, Save, Trash2, Replace, Bug, Code2, Database,
-  Terminal, ExternalLink, FileCode, Sparkles, Shield,
+  Terminal, ExternalLink, FileCode, Shield,
 } from "lucide-react";
 import { notify } from "@/lib/notify";
 import { pushTimelineEvent } from "@/lib/timeline";

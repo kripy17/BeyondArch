@@ -23,7 +23,7 @@ import {
   Wand2,
   ListChecks,
   X,
-  Sparkles,
+  Crosshair,
 } from "lucide-react";
 import {
   HUNTING_PRESETS,
@@ -287,7 +287,7 @@ function HuntingArsenalPage() {
                 className="inline-flex items-center gap-1.5 rounded-lg border border-primary/40 bg-primary/10 px-3 py-2 text-xs font-semibold text-primary hover:bg-primary/20 transition-colors"
                 title="Pull observables from active case"
               >
-                <Sparkles className="h-3.5 w-3.5" />
+                <Crosshair className="h-3.5 w-3.5" />
                 <span>Pull Case IOCs</span>
               </button>
 

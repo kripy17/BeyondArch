@@ -17,7 +17,6 @@ import {
   AlertTriangle,
   FileSpreadsheet,
   FileCode,
-  Sparkles,
   ExternalLink,
   ChevronDown,
   ChevronRight,

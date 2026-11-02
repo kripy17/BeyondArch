@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
   ShieldAlert, AlertTriangle, ArrowRight, Activity, CheckCircle2,
-  Lock, Terminal, RefreshCw, Radio, Flame,
+  Lock, Terminal, RefreshCw, Radio,
 } from "lucide-react";
 import type {
   KillChainAnalysis,
@@ -20,7 +20,7 @@ const PHASE_ICONS: Record<KillChainPhaseId, typeof Radio> = {
   initial_access: Lock,
   execution: Terminal,
   persistence_evasion: RefreshCw,
-  c2_exfil: Flame,
+  c2_exfil: ShieldAlert,
 };
 
 export function KillChainTimeline({

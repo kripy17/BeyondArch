@@ -8,7 +8,7 @@ import { SectionBar, Panel, SendToRow, Chip, IocInventory } from "@/components/s
 import { EntityHeader, EntitySection, MetricGrid, HeaderAction } from "@/components/entity";
 import { KeyFields, EvidenceCard, TwoColumnOutput, VerdictBanner, Empty } from "@/components/output";
 import { useOutputFilter, OutputFilterBar, OutputFilter } from "@/components/soc/OutputFilter";
-import { ShieldAlert, Copy, ArrowRight, ArrowLeftRight, Database, Play, Sparkles, Crosshair, Check, RotateCcw, Download, Upload, Hash, ShieldCheck, TriangleAlert as AlertTriangle, Loader2, Plus, FileCode as FileCode2, Wand2, Search, BookMarked, Trash2, Edit3, Save, X, ListFilter, Info, Library, Target, FlaskConical, Activity, CheckCircle2, Rocket, PencilLine, RefreshCw, Archive, FilePlus2, Gauge, Pin } from "lucide-react";
+import { ShieldAlert, Copy, ArrowRight, ArrowLeftRight, Database, Play, Crosshair, Check, RotateCcw, Download, Upload, Hash, ShieldCheck, TriangleAlert as AlertTriangle, Loader2, Plus, FileCode as FileCode2, Wand2, Search, BookMarked, Trash2, Edit3, Save, X, ListFilter, Info, Library, Target, FlaskConical, Activity, CheckCircle2, PencilLine, RefreshCw, Archive, FilePlus2, Gauge, Pin } from "lucide-react";
 import { mapMitre, generateSigmaRule, getIdsRuleTemplates, buildIdsRule } from "@/api/detection";
 import { translateSigma, listSigmaBackends } from "../api/detection";
 import { type Severity } from "@/lib/severity";
@@ -982,7 +982,7 @@ function DetectionPage() {
               )}
               {canTransition(activeRule.state, "deployed") && (
                 <button onClick={handleDeploy} className="inline-flex items-center gap-1 rounded border border-success/50 bg-success/10 px-2 py-1 text-mono ba-text-2xs text-success hover:bg-success/20">
-                  <Rocket className="h-3 w-3" /> deploy v{activeRule.version + 1}
+                  <CheckCircle2 className="h-3 w-3" /> deploy v{activeRule.version + 1}
                 </button>
               )}
               {activeRule.state === "deployed" && (
@@ -1099,7 +1099,7 @@ function DetectionPage() {
         {/* Simulation pane */}
         <Panel
           title="simulate · event"
-          icon={Sparkles}
+          icon={FlaskConical}
           meta={`${eventLines.length} ln`}
           className="col-span-2"
           actions={<Chip tone={result.hit ? "destructive" : "default"}>{result.hit ? "MATCH" : "no match"}</Chip>}
@@ -1544,7 +1544,7 @@ function DetectionPage() {
                       }}
                       className="inline-flex items-center gap-1 rounded border border-primary/50 bg-primary/10 px-2.5 py-1 text-mono ba-text-2xs text-primary hover:bg-primary/20"
                     >
-                      <Rocket className="h-3 w-3" /> load into sandbox
+                      <ArrowRight className="h-3 w-3" /> load into sandbox
                     </button>
                   </div>
                 </div>

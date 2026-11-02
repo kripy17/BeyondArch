@@ -7,7 +7,7 @@ import { EntitySection, EntityHeader } from "@/components/entity";
 import {
   Zap, Terminal, ArrowRight, Mail, Link2,
   FileWarning, Activity, Globe, Hash, Crosshair, Network, Copy, Check,
-  Sparkles, FileText, Workflow, AlertTriangle, ShieldAlert, Key, Download,
+  FileText, Workflow, AlertTriangle, ShieldAlert, Key, Download,
   Scan, Loader2, Search, SlidersHorizontal, CheckSquare, Square,
   ExternalLink, ChevronDown, RefreshCw, Layers, ShieldCheck, Database,
   Server, Coins, Cloud, CornerDownRight, X
@@ -470,7 +470,7 @@ function ParserPage() {
               <div className="rounded-lg border border-warning/40 bg-warning/5 p-3 space-y-2">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 text-warning">
-                    <Zap className="h-4 w-4 shrink-0 animate-pulse" />
+                    <Terminal className="h-4 w-4 shrink-0" />
                     <span className="text-mono ba-text-xs font-semibold">
                       Detected {obfuscations.length} Obfuscated Payload{obfuscations.length > 1 ? "s" : ""}
                     </span>

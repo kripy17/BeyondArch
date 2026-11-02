@@ -11,7 +11,7 @@ import {
   Server,
   Code,
   Key,
-  Flame,
+  Activity,
   AlertTriangle,
   FolderTree,
 } from 'lucide-react';
@@ -146,7 +146,7 @@ export const UrlAnatomyBar: React.FC<UrlAnatomyBarProps> = ({ anatomy, onSelectC
         {(anatomy.username || anatomy.password) && (
           <div
             onClick={() => onSelectComponent?.('credentials', `${anatomy.username}:${anatomy.password || ''}`)}
-            className="group relative flex cursor-pointer items-center gap-1 rounded bg-rose-500/20 px-2 py-1 text-rose-300 ring-1 ring-rose-500/50 hover:bg-rose-500/30 transition-all animate-pulse"
+            className="group relative flex cursor-pointer items-center gap-1 rounded bg-rose-500/20 px-2 py-1 text-rose-300 ring-1 ring-rose-500/50 hover:bg-rose-500/30 transition-all"
             title="Warning: Userinfo / Credentials embedded in URL"
           >
             <Key className="h-3 w-3 text-rose-400" />
@@ -275,7 +275,7 @@ export const UrlAnatomyBar: React.FC<UrlAnatomyBarProps> = ({ anatomy, onSelectC
         <div className="rounded-lg border border-zinc-800/80 bg-zinc-900/40 p-2.5">
           <div className="flex items-center justify-between text-zinc-400">
             <span className="text-[11px] font-medium">Shannon Entropy</span>
-            <Flame className={`h-3.5 w-3.5 ${anatomy.entropy.fullUrl > 4.5 ? 'text-amber-400' : 'text-zinc-500'}`} />
+            <Activity className={`h-3.5 w-3.5 ${anatomy.entropy.fullUrl > 4.5 ? 'text-amber-400' : 'text-zinc-500'}`} />
           </div>
           <div className="mt-1 flex items-baseline gap-1.5">
             <span className="text-base font-bold font-mono text-zinc-100">{anatomy.entropy.fullUrl}</span>

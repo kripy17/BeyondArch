@@ -18,9 +18,9 @@ import { ResumeBanner } from "@/components/ResumeBanner";
 import {
   FileText, AlertTriangle, ShieldAlert, ArrowRight,
   Terminal, Crosshair, FileWarning,
-  ListChecks, Clock, Users, Globe, Sparkles, Activity, Workflow,
+  ListChecks, Clock, Users, Globe, Activity, Workflow,
   Copy, Download, Code2, Shield, Search, Check, Layers, X,
-  Cpu, Flame, ShieldCheck,
+  Cpu, ShieldCheck,
 } from "lucide-react";
 import { copyText } from "@/lib/copy";
 import { translateAll, toSigmaRule } from "@/lib/siem/query-translator";
@@ -466,7 +466,7 @@ Write-Host "[+] Containment actions executed. Preserving RAM & disk for forensic
               <div className="rounded-lg border border-border/80 bg-surface-1/80 p-3.5 space-y-3">
                 <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-border/40">
                   <div className="flex items-center gap-2">
-                    <ShieldAlert className="h-4 w-4 text-destructive animate-pulse" />
+                    <ShieldAlert className="h-4 w-4 text-destructive" />
                     <span className="text-mono ba-text-xs font-bold uppercase tracking-wider text-foreground">
                       Correlated Multi-Stage Incident Narrative
                     </span>
@@ -931,7 +931,7 @@ Write-Host "[+] Containment actions executed. Preserving RAM & disk for forensic
               </Panel>
             )}
 
-            <EntitySection title="Recommendations" icon={Sparkles} meta={`${analysis.recommendations.length} open · engine`}>
+            <EntitySection title="Recommendations" icon={ShieldCheck} meta={`${analysis.recommendations.length} open · engine`}>
               {analysis.recommendations.length === 0 ? (
                 <p className="text-mono ba-text-sm text-muted-foreground">No open recommendations.</p>
               ) : (

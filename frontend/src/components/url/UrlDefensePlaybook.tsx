@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
   ShieldAlert, ShieldCheck, Copy, Check, Terminal, Globe,
-  Lock, Server, Flame, AlertTriangle, Code2, Database, Shield
+  Lock, Server, AlertTriangle, Code2, Database, Shield
 } from "lucide-react";
 import { copyText } from "@/lib/copy";
 import { toast } from "sonner";
@@ -54,7 +54,7 @@ export function UrlDefensePlaybook({
                 narrative.verdict === "SUSPICIOUS" ? "bg-amber-500/20 text-amber-400 border border-amber-500/40" :
                 "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"
               }`}>
-                {narrative.verdict === "MALICIOUS" ? <Flame className="h-3.5 w-3.5" /> : <ShieldCheck className="h-3.5 w-3.5" />}
+                {narrative.verdict === "MALICIOUS" ? <ShieldAlert className="h-3.5 w-3.5" /> : <ShieldCheck className="h-3.5 w-3.5" />}
                 {narrative.verdict} · {narrative.compositeScore}/100 RISK
               </span>
               <span className="text-mono ba-text-sm font-semibold text-foreground">
@@ -103,7 +103,7 @@ export function UrlDefensePlaybook({
         <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-3">
           <div className="flex items-start justify-between gap-2">
             <div className="flex items-center gap-2">
-              <ShieldAlert className="h-5 w-5 text-destructive shrink-0 animate-pulse" />
+              <ShieldAlert className="h-5 w-5 text-destructive shrink-0" />
               <div>
                 <span className="text-mono ba-text-xs font-bold uppercase tracking-wider text-destructive">
                   Targeted Phishing Brand Spoofing Detected

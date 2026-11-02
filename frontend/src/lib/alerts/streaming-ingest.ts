@@ -129,85 +129,6 @@ const FALLBACK_SCENARIOS: Record<string, Omit<StreamingAlert, "id" | "timestamp"
   ],
 };
 
-// Pure Web Audio API Synthesizer (No MP3/WAV files required)
-class CyberAudioSynthesizer {
-  private ctx: AudioContext | null = null;
-
-  private getContext(): AudioContext | null {
-    if (typeof window === "undefined") return null;
-    if (!this.ctx) {
-      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-      if (AudioCtx) this.ctx = new AudioCtx();
-    }
-    if (this.ctx && this.ctx.state === "suspended") {
-      this.ctx.resume().catch(() => {});
-    }
-    return this.ctx;
-  }
-
-  playAlertPing(severity: Severity) {
-    try {
-      if (isAudioMuted()) return;
-      const ctx = this.getContext();
-      if (!ctx) return;
-
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      const now = ctx.currentTime;
-      if (severity === "critical") {
-        // High urgency two-tone alert
-        osc.type = "sawtooth";
-        osc.frequency.setValueAtTime(880, now);
-        osc.frequency.exponentialRampToValueAtTime(440, now + 0.15);
-        gain.gain.setValueAtTime(0.08, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
-        osc.start(now);
-        osc.stop(now + 0.2);
-      } else if (severity === "high") {
-        // High priority cyber ping
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(660, now);
-        osc.frequency.exponentialRampToValueAtTime(330, now + 0.12);
-        gain.gain.setValueAtTime(0.05, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-        osc.start(now);
-        osc.stop(now + 0.15);
-      } else {
-        // Low subtle tick
-        osc.type = "triangle";
-        osc.frequency.setValueAtTime(520, now);
-        gain.gain.setValueAtTime(0.03, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-        osc.start(now);
-        osc.stop(now + 0.08);
-      }
-    } catch {
-      // Ignore audio synthesis errors
-    }
-  }
-}
-
-export const cyberAudio = new CyberAudioSynthesizer();
-
-export function isAudioMuted(): boolean {
-  try {
-    return localStorage.getItem(LS_AUDIO_MUTED) === "true";
-  } catch {
-    return false;
-  }
-}
-
-export function setAudioMuted(muted: boolean) {
-  try {
-    localStorage.setItem(LS_AUDIO_MUTED, String(muted));
-    window.dispatchEvent(new CustomEvent("ba:streaming-muted-changed", { detail: muted }));
-  } catch {}
-}
-
 export function isStreamingActive(): boolean {
   try {
     const val = localStorage.getItem(LS_STREAM_ACTIVE);
@@ -310,9 +231,6 @@ class StreamingIngestClient {
 
     this.recentAlerts.unshift(alert);
     if (this.recentAlerts.length > 50) this.recentAlerts.pop();
-
-    // Play subtle cyber tone if audio is unmuted
-    cyberAudio.playAlertPing(alert.severity);
 
     // Notify registered in-memory subscribers
     for (const listener of this.listeners) {

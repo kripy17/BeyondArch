@@ -225,7 +225,7 @@ function Dashboard() {
             <div className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-subtle bg-surface-1 px-3 py-2">
               <div className="flex items-center gap-2 min-w-0">
                 <span className={cn("inline-flex items-center gap-1.5 rounded border px-2 py-0.5 font-mono ba-text-2xs font-bold uppercase shrink-0", defconTone)}>
-                  <Radio className="h-3 w-3 animate-pulse" />
+                  <Radio className="h-3 w-3" />
                   <span>{defconLabel}</span>
                 </span>
                 <span className="font-mono ba-text-3xs text-muted-foreground truncate">

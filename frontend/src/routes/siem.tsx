@@ -14,7 +14,7 @@ import {
   Download, Clock, X, ListFilter, FileText, Crosshair, Bug, Loader2,
   Hash, ChevronDown, ChevronRight, Search, Pin, Save, Trash2, Target, Star,
   Upload, BarChart3, Terminal, Copy, Check, Lock, Server,
-  BookMarked, Sparkles,
+  BookMarked, SlidersHorizontal,
 } from "lucide-react";
 import { sendToCase } from "@/lib/handoff";
 import { useLocker } from "@/lib/locker";
@@ -679,7 +679,7 @@ function SiemPage() {
           onClick={() => setHuntingArsenalOpen(true)}
           className="inline-flex items-center gap-1.5 rounded border border-primary/40 bg-surface-0 px-2.5 py-1 text-mono ba-text-2xs text-primary transition-colors duration-150 hover:bg-primary/10"
         >
-          <Sparkles className="h-3 w-3" />
+          <SlidersHorizontal className="h-3 w-3" />
           hunting playbook arsenal
         </button>
       </div>
@@ -1020,7 +1020,7 @@ function SiemPage() {
       {activeBeacons.length > 0 && (
         <div className="mb-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 rounded-lg border border-destructive/40 bg-destructive/10 px-3.5 py-2.5">
           <div className="flex items-center gap-2.5">
-            <ShieldAlert className="h-5 w-5 animate-pulse text-destructive shrink-0" />
+            <ShieldAlert className="h-5 w-5 text-destructive shrink-0" />
             <div>
               <span className="font-mono ba-text-xs font-bold text-destructive">
                 Deterministic C2 Beaconing Cadence Detected ({activeBeacons.length} target{activeBeacons.length > 1 ? "s" : ""})

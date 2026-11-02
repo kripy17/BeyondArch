@@ -17,7 +17,6 @@ import {
   Code2,
   Terminal,
   Database,
-  Sparkles,
   Layers,
   ArrowRight,
   Send,

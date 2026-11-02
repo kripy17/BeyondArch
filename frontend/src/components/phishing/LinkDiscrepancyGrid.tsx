@@ -104,7 +104,7 @@ export const LinkDiscrepancyGrid: React.FC<LinkDiscrepancyGridProps> = ({
                   <span
                     className={`rounded px-2 py-0.5 text-[10px] font-mono font-bold uppercase ring-1 ${
                       isMismatch
-                        ? 'bg-rose-500/20 text-rose-300 ring-rose-500/30 animate-pulse'
+                        ? 'bg-rose-500/20 text-rose-300 ring-rose-500/30'
                         : isRedirect
                         ? 'bg-amber-500/20 text-amber-300 ring-amber-500/30'
                         : 'bg-emerald-500/20 text-emerald-300 ring-emerald-500/30'

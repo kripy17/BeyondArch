@@ -4,7 +4,7 @@ import {
   Layers,
   Search,
   ExternalLink,
-  Flame,
+  Target,
   CheckCircle2,
   Filter,
 } from "lucide-react";
@@ -177,7 +177,7 @@ export function MitreNavigatorMatrix({
                               {tech.id}
                             </span>
                             {isActive && (
-                              <Flame className="h-3 w-3 text-amber-400 shrink-0 animate-pulse" />
+                              <Target className="h-3 w-3 text-amber-400 shrink-0" />
                             )}
                           </div>
                           <div className="mt-0.5 truncate font-mono text-[11px] font-medium text-foreground group-hover:text-primary">

@@ -3,7 +3,6 @@ import { useNavigate } from "@tanstack/react-router";
 import {
   BookMarked,
   Crosshair,
-  Sparkles,
   Search,
   Copy,
   Check,
@@ -243,11 +242,11 @@ export function HuntingPlaybookArsenalModal({
               <h2 id="hunting-arsenal-title" className="text-base font-semibold text-foreground truncate flex items-center gap-2">
                 Threat Hunting Playbook Arsenal
                 <span className="hidden sm:inline-flex items-center gap-1 rounded bg-primary/10 border border-primary/30 px-2 py-0.5 text-mono ba-text-3xs text-primary">
-                  <Sparkles className="h-2.5 w-2.5" /> Sigma Auto-Tuning
+                  <SlidersHorizontal className="h-2.5 w-2.5" /> Sigma Rule Tuning
                 </span>
               </h2>
               <p className="text-xs text-muted-foreground truncate">
-                Curated multi-dialect queries (Splunk, Sentinel, Elastic, Suricata) with 1-click SIEM execution & autonomous Sigma tuning
+                Curated multi-dialect queries (Splunk, Sentinel, Elastic, Suricata) with 1-click SIEM execution & automated Sigma tuning
               </p>
             </div>
           </div>
@@ -622,17 +621,17 @@ export function HuntingPlaybookArsenalModal({
                   </pre>
                 </div>
 
-                {/* Autonomous Sigma Rule Auto-Tuning Engine Panel */}
+                {/* Automated Sigma Rule Tuning & Noise Suppression Panel */}
                 {activeSnippet.category !== "checklists" && tunedRule && (
                   <div className="rounded-xl border border-primary/30 bg-surface-0/90 p-4 space-y-3 shadow-inner">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-subtle pb-2.5">
                       <div className="flex items-center gap-2 min-w-0">
                         <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded bg-primary/20 text-primary">
-                          <Sparkles className="h-3.5 w-3.5" />
+                          <SlidersHorizontal className="h-3.5 w-3.5" />
                         </div>
                         <div className="min-w-0">
                           <h4 className="text-xs font-bold text-foreground truncate flex items-center gap-2">
-                            Autonomous Sigma Rule Auto-Tuning
+                            Sigma Rule Tuning & False Positive Suppression
                             <span className="rounded bg-emerald-500/10 border border-emerald-500/30 px-1.5 py-0.2 text-mono ba-text-3xs text-emerald-400 font-semibold">
                               Score: {tunedRule.healthScore}/100
                             </span>

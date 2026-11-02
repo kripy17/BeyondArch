@@ -1,25 +1,25 @@
 import { useMemo, useState } from "react";
 import {
-  Sparkles, ShieldAlert, CheckCircle2, XCircle, AlertTriangle,
-  ArrowRight, Copy, Check, Bot, Zap, ArrowUpRight
+  ShieldCheck, CheckCircle2,
+  Copy, Check, SlidersHorizontal, ArrowRight
 } from "lucide-react";
 import { Chip } from "@/components/soc";
 import { copyText } from "@/lib/copy";
 import { toast } from "sonner";
 import type { TriageItem, TriageVerdict } from "@/data/triage";
 
-interface AutonomousTriageCopilotProps {
+interface TriageAssessmentPanelProps {
   item: TriageItem;
   onApplyRecommendation: (verdict: TriageVerdict, justification: string) => void;
 }
 
-export function AutonomousTriageCopilot({
+export function TriageAssessmentPanel({
   item,
   onApplyRecommendation,
-}: AutonomousTriageCopilotProps) {
+}: TriageAssessmentPanelProps) {
   const [copied, setCopied] = useState(false);
 
-  // Synthesize Autonomous Triage Recommendation
+  // Synthesize Automated Triage Recommendation
   const recommendation = useMemo(() => {
     const text = `${item.title} ${item.description} ${(item.tags || []).join(" ")}`.toLowerCase();
     const isCriticalOrHigh = item.severity === "critical" || item.severity === "high";
@@ -71,7 +71,7 @@ export function AutonomousTriageCopilot({
       reasoning = "Overly broad detection trigger matching benign operational baseline or developer workflow without secondary malicious observables. Tune detection rule.";
     }
 
-    const justification = `[Autonomous Triage Co-Pilot] Disposition: ${verdict.toUpperCase()} (Confidence: ${confidence}%)
+    const justification = `[Automated Triage] Disposition: ${verdict.toUpperCase()} (Confidence: ${confidence}%)
 Analysis: ${reasoning}
 Matched Context: Source=${item.source}, Severity=${item.severity}, Title="${item.title}"
 Action: Standard operating containment procedure applied.`;
@@ -88,13 +88,13 @@ Action: Standard operating containment procedure applied.`;
   };
 
   return (
-    <div id="autonomous-triage-copilot" className="rounded-md border border-primary/40 bg-primary/[0.04] p-3 space-y-2.5 font-mono min-w-0 max-w-full overflow-hidden">
+    <div id="triage-assessment-panel" data-testid="autonomous-triage-copilot" className="rounded-md border border-subtle bg-surface-1/60 p-3 space-y-2.5 font-mono min-w-0 max-w-full overflow-hidden">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-primary/20 pb-2">
+      <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-subtle pb-2">
         <div className="flex items-center gap-1.5 min-w-0">
-          <Bot className="h-4 w-4 text-primary animate-pulse shrink-0" />
-          <span className="ba-text-xs font-bold uppercase text-foreground truncate">
-            Autonomous Triage Co-Pilot
+          <ShieldCheck className="h-4 w-4 text-primary shrink-0" />
+          <span className="ba-text-xs font-bold uppercase text-foreground tracking-wide truncate">
+            Automated Triage Analysis
           </span>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
@@ -111,7 +111,7 @@ Action: Standard operating containment procedure applied.`;
       <div className="space-y-1">
         <div className="text-muted-foreground ba-text-3xs uppercase font-semibold">Recommended Disposition</div>
         <div className="flex items-center gap-1.5">
-          <Zap className="h-3.5 w-3.5 text-warning shrink-0" />
+          <SlidersHorizontal className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
           <span
             className={`ba-text-xs font-bold ${
               recommendation.tone === "destructive"
@@ -126,9 +126,9 @@ Action: Standard operating containment procedure applied.`;
         </div>
       </div>
 
-      {/* Explainable Reasoning Trace */}
-      <div className="rounded border border-border/60 bg-surface-0 p-2 space-y-1">
-        <div className="text-muted-foreground ba-text-3xs uppercase font-semibold">Autonomous Reasoning Trace</div>
+      {/* Decision Criteria Trace */}
+      <div className="rounded border border-subtle bg-surface-0 p-2 space-y-1">
+        <div className="text-muted-foreground ba-text-3xs uppercase font-semibold">Triage Decision Criteria</div>
         <p className="ba-text-3xs text-fg-dim leading-relaxed break-words">{recommendation.reasoning}</p>
       </div>
 
@@ -137,9 +137,9 @@ Action: Standard operating containment procedure applied.`;
         <button
           type="button"
           onClick={() => onApplyRecommendation(recommendation.verdict, recommendation.justification)}
-          className="inline-flex items-center gap-1.5 rounded border border-primary/50 bg-primary/15 px-2.5 py-1 ba-text-2xs text-primary font-semibold hover:bg-primary/25 transition shrink-0"
+          className="inline-flex items-center gap-1.5 rounded border border-primary/40 bg-primary/10 px-2.5 py-1 ba-text-2xs text-primary font-semibold hover:bg-primary/20 transition shrink-0"
         >
-          <Sparkles className="h-3 w-3" />
+          <CheckCircle2 className="h-3 w-3" />
           <span>Apply Recommendation</span>
         </button>
 
@@ -156,3 +156,6 @@ Action: Standard operating containment procedure applied.`;
     </div>
   );
 }
+
+// Backward compatibility alias
+export const AutonomousTriageCopilot = TriageAssessmentPanel;

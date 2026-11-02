@@ -80,7 +80,7 @@ export function TcpStreamModal({
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border bg-surface-1 px-4 py-3">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span className="flex h-2 w-2 rounded-full bg-primary" />
             <span className="font-mono text-xs font-semibold text-foreground truncate">
               Follow TCP Stream — {streamTitle}
             </span>

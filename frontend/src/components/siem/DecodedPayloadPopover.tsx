@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Terminal, Copy, Check, ExternalLink, ArrowRight, ShieldAlert, Sparkles, X } from "lucide-react";
+import { Terminal, Copy, Check, ExternalLink, ArrowRight, ShieldAlert, X } from "lucide-react";
 import { copyText } from "@/lib/copy";
 import { toast } from "sonner";
 import { sendToCase } from "@/lib/handoff";
@@ -49,7 +49,7 @@ export function DecodedPayloadPopover({ rawText, onPivotToDetection }: DecodedPa
         className="inline-flex items-center gap-1 rounded border border-warning/40 bg-warning/10 px-1.5 py-0.5 font-mono ba-text-3xs text-warning hover:bg-warning/20 transition-colors"
         title="Click to inspect deobfuscated payload"
       >
-        <Terminal className="h-3 w-3 animate-pulse text-warning" />
+        <Terminal className="h-3 w-3 text-warning" />
         <span>Deobfuscated ({payload.encoding.toUpperCase()})</span>
       </button>
 

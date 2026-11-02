@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import {
   ShieldAlert, ShieldCheck, Mail, Terminal, Copy, Check,
-  ExternalLink, Lock, AlertTriangle, UserCheck, Flame, Server
+  ExternalLink, Lock, AlertTriangle, UserCheck, Server
 } from "lucide-react";
 import { Chip } from "@/components/soc";
 import { copyText } from "@/lib/copy";

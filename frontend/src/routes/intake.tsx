@@ -5,7 +5,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeSection, QuickLinks, RecentTools, RecentCases, KbdHints } from "@/components/WorkspaceHome";
 import {
   UploadCloud, FileCode, CheckCircle, Copy, ArrowRight, ShieldAlert,
-  Hash, ExternalLink, Sparkles, AlertTriangle, Layers, BookmarkPlus,
+  Hash, ExternalLink, AlertTriangle, Layers, BookmarkPlus,
   RefreshCw, FileText, Globe, MailWarning, Link2, File, ScrollText,
   Paperclip, ListChecks,
 } from "lucide-react";
@@ -220,7 +220,7 @@ ${digest.observables.map((o) => `- ${o.kind.toUpperCase()}: ${o.defanged}`).join
             {/* Attack Simulation Presets */}
             <div className="flex flex-wrap items-center gap-2 pt-1">
               <span className="flex items-center gap-1 text-mono ba-text-3xs text-muted-foreground font-medium">
-                <Sparkles className="h-3 w-3 text-warning" /> Attack presets:
+                <ShieldAlert className="h-3 w-3 text-warning" /> Attack presets:
               </span>
               {INTAKE_PRESETS.map((preset) => (
                 <button

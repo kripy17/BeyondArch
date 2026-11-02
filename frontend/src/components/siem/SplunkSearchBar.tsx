@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import {
-  Search, X, Sparkles, Copy, Check, Terminal, Code2, Download,
+  Search, X, Copy, Check, Terminal, Code2, Download,
   Layers, Clock, Filter, ChevronRight, HelpCircle, Shield,
 } from "lucide-react";
 import { copyText } from "@/lib/copy";
@@ -122,7 +122,7 @@ export function SplunkSearchBar({
           }
           title="Translate query into Splunk SPL, Elastic KQL, Sigma, and Velociraptor VQL"
         >
-          <Sparkles className="h-3.5 w-3.5 animate-pulse" />
+          <Code2 className="h-3.5 w-3.5" />
           <span className="hidden sm:inline">Cross-SIEM Translator</span>
         </button>
       </div>
@@ -187,9 +187,9 @@ export function SplunkSearchBar({
         <div className="mt-3 rounded-lg border border-primary/30 bg-surface-1 p-4 shadow-sm animate-in fade-in slide-in-from-top-2 duration-150">
           <div className="flex items-center justify-between border-b border-border/70 pb-2.5">
             <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-primary" />
+              <Code2 className="h-4 w-4 text-primary" />
               <h4 className="font-mono ba-text-sm font-semibold text-foreground">
-                Zero-Tab Cross-SIEM Query Translator
+                Cross-SIEM Query Translator
               </h4>
               <span className="rounded bg-primary/10 px-1.5 py-0.5 text-mono ba-text-3xs text-primary">
                 Multi-Engine

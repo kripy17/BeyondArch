@@ -1,8 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import {
   streamingIngestClient,
-  isAudioMuted,
-  setAudioMuted,
   isStreamingActive,
   setStreamingActive,
   type StreamingAlert,
@@ -31,16 +29,7 @@ describe("Real-Time Streaming Alert Ingestion Pipeline", () => {
     store.clear();
   });
 
-  describe("Stream State & Audio Preferences", () => {
-    it("manages audio mute state persistently", () => {
-      expect(isAudioMuted()).toBe(false);
-      setAudioMuted(true);
-      expect(isAudioMuted()).toBe(true);
-      expect(store.get("ba.streaming.muted")).toBe("true");
-      setAudioMuted(false);
-      expect(isAudioMuted()).toBe(false);
-    });
-
+  describe("Stream State Preferences", () => {
     it("manages streaming active toggle persistently", () => {
       expect(isStreamingActive()).toBe(true);
       setStreamingActive(false);

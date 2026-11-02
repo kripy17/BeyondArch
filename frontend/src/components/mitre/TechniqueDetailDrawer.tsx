@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { X, ShieldAlert, Terminal, Copy, Check, Database, Sparkles, ExternalLink, Bookmark, StickyNote, Info, Layers } from "lucide-react";
+import { X, ShieldAlert, Terminal, Copy, Check, Database, ExternalLink, Bookmark, StickyNote, Info, Layers } from "lucide-react";
 import { Chip } from "@/components/soc";
 import { getTechniqueEnrichment, type CoverageLevel } from "@/lib/detection/navigator-layer-engine";
 import { copyText } from "@/lib/copy";

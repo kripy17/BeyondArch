@@ -7,7 +7,7 @@ import { useLocker } from "@/lib/locker";
 import { pushTimelineEvent } from "@/lib/timeline";
 import { CopyInline } from "@/components/CopyButton";
 import { copyText } from "@/lib/copy";
-import { MailWarning as FileWarning, Hash, Database, ArrowRight, ShieldAlert, ExternalLink, Upload, Eraser, Download, Sigma, Binary, TriangleAlert as AlertTriangle, Activity, Copy, Check, X, Sparkles, Wrench } from "lucide-react";
+import { MailWarning as FileWarning, Hash, Database, ArrowRight, ShieldAlert, ExternalLink, Upload, Eraser, Download, Sigma, Binary, TriangleAlert as AlertTriangle, Activity, Copy, Check, X, FileCode, Wrench } from "lucide-react";
 import { toast } from "sonner";
 import { uploadMalwareFile } from "@/api/backend";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -381,7 +381,7 @@ function AttachmentPage() {
                 onClick={() => setYaraModalOpen(true)}
                 className="inline-flex items-center gap-1.5 rounded border border-warning/50 bg-warning/10 px-2.5 py-1 text-mono ba-text-2xs text-warning hover:bg-warning/20 font-semibold transition-colors"
               >
-                <Sparkles className="h-3 w-3" /> YARA Rule
+                <FileCode className="h-3 w-3" /> YARA Rule
               </button>
               <button
                 type="button"

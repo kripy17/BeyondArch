@@ -12,13 +12,12 @@ import {
   Download,
   Check,
   FileText,
-  Sparkles,
-  Zap,
+  Target,
+  Terminal,
   Layers,
   ArrowRight,
   RefreshCw,
   Globe,
-  Flame,
 } from "lucide-react";
 import { getThreatActors, type ThreatActorEntity } from "@/data/intel";
 import {
@@ -227,7 +226,7 @@ export function AdversaryAttributionWorkspace({
               )}
               title="Correlate active case IOCs against threat actor infrastructure"
             >
-              <Sparkles className="h-3.5 w-3.5" />
+              <Target className="h-3.5 w-3.5" />
               <span>{isCaseAttributed ? "Attributed to Active Case" : "Auto-Attribute Active Case"}</span>
             </button>
           )}
@@ -383,7 +382,7 @@ export function AdversaryAttributionWorkspace({
                     key={tool}
                     className="inline-flex items-center gap-1 font-mono text-[11px] px-2 py-0.5 rounded bg-destructive/10 text-destructive border border-destructive/20 font-semibold"
                   >
-                    <Flame className="h-3 w-3" />
+                    <Terminal className="h-3 w-3" />
                     {tool}
                   </span>
                 ))}

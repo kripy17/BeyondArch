@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import {
   Shield, ShieldAlert, ShieldCheck, Siren, Copy, Check, Terminal,
-  ExternalLink, Clock, AlertTriangle, UserCheck, Flame, Server,
+  ExternalLink, Clock, AlertTriangle, UserCheck, Server,
   Building2, Scale, FileText, CheckCircle2, ChevronRight, Lock
 } from "lucide-react";
 import { Chip } from "@/components/soc";
@@ -292,14 +292,14 @@ All digital evidence collected conforms to ISO/IEC 27037 standards for digital e
           <Siren
             className={`h-4 w-4 shrink-0 ${
               incidentAnalysis.tone === "destructive"
-                ? "text-destructive animate-pulse"
+                ? "text-destructive"
                 : incidentAnalysis.tone === "warning"
                 ? "text-warning"
                 : "text-primary"
             }`}
           />
           <span className="ba-text-xs font-bold uppercase tracking-wider text-foreground">
-            Executive Incident Assessment Dossier & Diamond Model
+            Incident Executive Summary & Threat Profile
           </span>
         </div>
 

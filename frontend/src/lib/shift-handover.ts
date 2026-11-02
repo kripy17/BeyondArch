@@ -464,7 +464,7 @@ ${infrastructure
 
 **Outgoing Lead Sign-Off:** \`${outgoingLead}\`  
 **Incoming Lead Acknowledgment:** \`${incomingLead}\`  
-*Generated autonomously via BeyondArch SOC Incident Briefing Engine.*
+*Generated via BeyondArch SOC Incident Briefing Engine.*
 `;
 }
 

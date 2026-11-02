@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { ArrowDownToLine, ArrowUpFromLine, Clock, Filter, Settings2, Sparkles, type LucideIcon } from "lucide-react";
+import { ArrowDownToLine, ArrowUpFromLine, Clock, Filter, Settings2, ShieldCheck, type LucideIcon } from "lucide-react";
 
 const SECTION_ICONS: Record<string, LucideIcon> = {
   IN: ArrowDownToLine,
@@ -7,7 +7,7 @@ const SECTION_ICONS: Record<string, LucideIcon> = {
   RC: Clock,
   FL: Filter,
   CF: Settings2,
-  AI: Sparkles,
+  AI: ShieldCheck,
 };
 
 export function SectionBar({

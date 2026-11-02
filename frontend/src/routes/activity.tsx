@@ -29,7 +29,6 @@ import {
   FileText,
   Clock,
   Layers,
-  Sparkles,
   CheckCircle2,
   Radio,
 } from "lucide-react";
@@ -501,7 +500,7 @@ function ActivityPage() {
                     // Color border and dot according to severity
                     const dotClass =
                       sev === "critical"
-                        ? "bg-destructive ring-destructive/30 animate-pulse"
+                        ? "bg-destructive ring-destructive/30"
                         : sev === "high"
                         ? "bg-warning ring-warning/30"
                         : sev === "medium"

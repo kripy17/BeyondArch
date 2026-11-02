@@ -2,7 +2,7 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
   Search, ShieldAlert, Copy, Check, ArrowUpRight, Plus, FolderPlus,
-  Terminal, Sparkles, ExternalLink, RefreshCw, Layers,
+  Terminal, ShieldCheck, ExternalLink, RefreshCw, Layers,
 } from "lucide-react";
 import { classifyOmniInput, type OmniTriageResult } from "@/lib/omni-triage";
 import { copyText } from "@/lib/copy";
@@ -115,7 +115,7 @@ export function OmniTriageDock() {
     <div className="rounded-lg border border-primary/30 bg-gradient-to-br from-surface-1/90 via-surface-1/50 to-surface-0 p-3.5 shadow-sm">
       <div className="flex flex-wrap items-center justify-between gap-2 pb-2">
         <div className="flex items-center gap-2 font-mono ba-text-2xs font-semibold uppercase tracking-wider text-primary">
-          <Sparkles className="h-3.5 w-3.5 text-primary animate-pulse" />
+          <ShieldCheck className="h-3.5 w-3.5 text-primary" />
           <span>Universal Fast-Triage Dock</span>
           <span className="rounded border border-primary/30 bg-primary/10 px-1.5 py-0.2 text-mono ba-text-3xs lowercase font-normal text-muted-foreground">
             press &apos;/&apos; to focus

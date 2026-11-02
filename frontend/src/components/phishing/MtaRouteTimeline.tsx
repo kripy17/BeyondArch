@@ -104,7 +104,7 @@ export const MtaRouteTimeline: React.FC<MtaRouteTimelineProps> = ({ mtaHops }) =
                       <span
                         className={`flex items-center gap-1 rounded px-2 py-0.5 text-[11px] font-mono font-medium ring-1 ${
                           hop.delayAnomaly
-                            ? 'bg-rose-500/20 text-rose-300 ring-rose-500/40 animate-pulse'
+                            ? 'bg-rose-500/20 text-rose-300 ring-rose-500/40'
                             : hop.clockSkew
                             ? 'bg-yellow-500/20 text-yellow-300 ring-yellow-500/30'
                             : 'bg-zinc-800 text-zinc-300 ring-zinc-700'

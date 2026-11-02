@@ -15,7 +15,6 @@ import {
   Loader2,
   ArrowRight,
   Send,
-  Sparkles,
 } from "lucide-react";
 import type { Playbook, PlaybookRunRecord } from "@/lib/playbooks";
 import { recordPlaybookRun, generatePlaybookRunMarkdown } from "@/lib/playbooks";

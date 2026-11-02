@@ -17,7 +17,7 @@ import { rememberCorrelation } from "@/lib/correlation";
 import { EntitySection } from "@/components/entity";
 import { ResultBanner, AnalysisLoading } from "@/components/output";
 import { FileText, AlertTriangle, ArrowRight, Database,
-  Hash, Bug, FileWarning, Sparkles, Activity, Workflow, Crosshair, Binary, Wrench, ShieldAlert } from "lucide-react";
+  Hash, Bug, FileWarning, FileCode, ShieldCheck, Activity, Workflow, Crosshair, Binary, Wrench, ShieldAlert } from "lucide-react";
 import { PeSectionMap } from "@/components/malware/PeSectionMap";
 import { YaraRuleModal } from "@/components/malware/YaraRuleModal";
 import { DocumentInspectorView } from "@/components/malware/DocumentInspectorView";
@@ -536,7 +536,7 @@ function FilePage() {
                   onClick={() => setYaraModalOpen(true)}
                   className="inline-flex items-center gap-1.5 rounded border border-warning/50 bg-warning/10 px-2.5 py-1 text-mono ba-text-2xs text-warning hover:bg-warning/20 font-semibold transition-colors"
                 >
-                  <Sparkles className="h-3 w-3" /> YARA Rule
+                  <FileCode className="h-3 w-3" /> YARA Rule
                 </button>
                 <button
                   type="button"
@@ -826,7 +826,7 @@ function FilePage() {
               </div>
             </Panel>
 
-            <EntitySection title="Recommendations" icon={Sparkles} meta={`${analysis.recommendations.length} open · engine`}>
+            <EntitySection title="Recommendations" icon={ShieldCheck} meta={`${analysis.recommendations.length} open · engine`}>
               {analysis.recommendations.length === 0 ? (
                 <p className="text-mono ba-text-sm text-muted-foreground">No open recommendations.</p>
               ) : (

@@ -42,7 +42,6 @@ import {
   User,
   Bot,
   Server,
-  Sparkles,
   BarChart2,
   Calendar,
   Layers,
@@ -698,7 +697,7 @@ function TimelinePage() {
               {timeSlice && (
                 <div className="mt-3 flex items-center justify-between rounded-md border border-primary/40 bg-primary/10 px-3 py-1.5 text-mono ba-text-2xs">
                   <div className="flex items-center gap-2 text-primary">
-                    <Sparkles className="h-3.5 w-3.5" />
+                    <Clock className="h-3.5 w-3.5" />
                     <span>
                       Active Time Slice:{" "}
                       <strong>
@@ -794,7 +793,7 @@ function TimelinePage() {
                   <span
                     className={`inline-block h-1.5 w-1.5 rounded-full ${
                       sev === "critical"
-                        ? "bg-destructive animate-pulse"
+                        ? "bg-destructive"
                         : sev === "high"
                         ? "bg-warning"
                         : "bg-muted-foreground"
@@ -1073,7 +1072,7 @@ function TimelinePage() {
                               <span
                                 className={`h-1.5 w-1.5 rounded-full ${
                                   sev === "critical"
-                                    ? "bg-destructive animate-pulse"
+                                    ? "bg-destructive"
                                     : sev === "high"
                                     ? "bg-warning"
                                     : "bg-current opacity-70"
