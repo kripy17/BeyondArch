@@ -1,0 +1,420 @@
+import ipaddress
+import os
+from urllib.parse import urlparse
+
+import httpx
+
+from app.services.ioc_extractor import defang_text, refang_text
+from app.utils import SUSPICIOUS_TLDS, URL_SHORTENERS, rating_from_score, score_findings, utc_now, verdict_from_rating
+
+VT_API_BASE = "https://www.virustotal.com/api/v3"
+VT_TIMEOUT_SECONDS = 8
+
+
+def add_finding(findings, severity, title, detail, recommendation):
+    findings.append({
+        "severity": severity,
+        "title": title,
+        "detail": detail,
+        "recommendation": recommendation,
+    })
+
+
+INDICATOR_MITRE_MAP = {
+    "ip": {"id": "T1071", "name": "Application Layer Protocol", "subtechniques": [{"id": "T1071.001", "name": "Web Protocols"}]},
+    "domain": {"id": "T1583", "name": "Acquire Infrastructure", "subtechniques": [{"id": "T1583.001", "name": "Domains"}]},
+    "url": {"id": "T1566", "name": "Phishing", "subtechniques": [{"id": "T1566.002", "name": "Spearphishing Link"}]},
+    "hash": {"id": "T1204", "name": "User Execution", "subtechniques": [{"id": "T1204.002", "name": "Malicious File"}]},
+    "email": {"id": "T1566", "name": "Phishing", "subtechniques": [{"id": "T1566.001", "name": "Spearphishing Attachment"}, {"id": "T1566.002", "name": "Spearphishing Link"}]},
+}
+
+
+def finding(
+    *,
+    indicator: str,
+    indicator_type: str,
+    verdict: str = "unknown",
+    confidence: str = "unknown",
+    trust_type: str = "heuristic_inferred",
+    source: str = "BeyondLabs",
+    method: str = "local analysis",
+    freshness: str = "point_in_time",
+    checked_at: str | None = None,
+    summary: str = "Analysis completed.",
+    evidence: list[str] | None = None,
+    limitations: str = "Review with analyst context before drawing conclusions.",
+    recommended_next_step: str = "Correlate with case evidence and logs.",
+    raw_details: dict | None = None,
+) -> dict:
+    result = {
+        "id": f"{indicator_type}:{indicator}:{source}:{method}:{checked_at or utc_now()}",
+        "indicator": indicator,
+        "type": indicator_type,
+        "verdict": verdict,
+        "confidence": confidence,
+        "trust_type": trust_type,
+        "source": source,
+        "method": method,
+        "freshness": freshness,
+        "checked_at": checked_at or utc_now(),
+        "summary": summary,
+        # Aliases so every consumer (cards, tables, exports) can read the same
+        # shape as provider-style findings without special-casing sources.
+        "severity": verdict if verdict != "clean" else "info",
+        "title": summary,
+        "detail": summary,
+        "guidance": recommended_next_step,
+        "evidence": evidence or [],
+        "limitations": limitations,
+        "recommended_next_step": recommended_next_step,
+        "raw_details": raw_details,
+    }
+    mitre = INDICATOR_MITRE_MAP.get(indicator_type)
+    if mitre:
+        result["mitre_attack"] = mitre
+    return result
+
+
+def local_reputation_finding(indicator: str, indicator_type: str, raw: dict) -> dict:
+    summary = raw.get("summary", {})
+    findings = raw.get("findings", []) if isinstance(raw.get("findings"), list) else []
+
+    return finding(
+        indicator=raw.get("normalized") or raw.get("indicator") or indicator,
+        indicator_type=indicator_type,
+        verdict=verdict_from_rating(summary.get("rating")),
+        confidence="medium" if findings else "low",
+        trust_type="heuristic_inferred",
+        source="BeyondLabs local heuristic",
+        method="local deterministic scoring",
+        freshness="point_in_time",
+        summary=(
+            f"{summary.get('rating')} based on {summary.get('total_findings', 0)} local finding(s)."
+            if summary.get("rating")
+            else "Local heuristic completed."
+        ),
+        evidence=[f"{item.get('severity', 'info')}: {item.get('title', 'Finding')}" for item in findings],
+        limitations=raw.get("note") or "Local heuristic checks do not confirm maliciousness.",
+        recommended_next_step="Correlate with case evidence, logs, and analyst context.",
+        raw_details=raw,
+    )
+
+
+def local_hash_finding(indicator: str, indicator_type: str) -> dict:
+    from app.services.hash_analyzer import identify_hash
+
+    info = identify_hash(indicator)
+    hash_type = info.get("type", "unknown") if info.get("valid") else "unknown"
+
+    return finding(
+        indicator=indicator,
+        indicator_type=indicator_type,
+        verdict="unknown",
+        confidence="low",
+        trust_type="local_deterministic",
+        source="BeyondLabs hash classifier",
+        method="hash length and hex format identification",
+        summary=(
+            f"Indicator matches {hash_type} format."
+            if hash_type != "unknown"
+            else f"Hash format could not be identified ({info.get('message', 'not a hex digest')})."
+        ),
+        limitations="Hash format identification is not reputation and does not indicate whether the file is malicious.",
+        recommended_next_step="Use static file triage and correlate with file origin, host activity, and case evidence.",
+        raw_details={"hash_type": hash_type},
+    )
+
+
+def normalize_indicator_for_type(indicator: str, indicator_type: str) -> str:
+    clean = refang_text(indicator.strip())
+
+    if indicator_type in {"domain", "email"}:
+        return clean.lower().strip(".")
+
+    if indicator_type == "url":
+        return clean
+
+    if indicator_type.startswith("hash") or indicator_type == "hash":
+        return clean.lower()
+
+    return clean
+
+
+def vt_verdict_from_stats(stats: dict) -> tuple[str, str]:
+    malicious = int(stats.get("malicious", 0) or 0)
+    suspicious = int(stats.get("suspicious", 0) or 0)
+    total = sum(int(v or 0) for v in stats.values())
+
+    if malicious > 0:
+        return ("malicious", "high" if malicious >= 3 else "medium")
+    if suspicious > 0:
+        return ("suspicious", "medium")
+    return ("clean", "high" if total >= 5 else "low")
+
+
+async def vt_hash_finding(indicator: str) -> dict | None:
+    api_key = os.environ.get("BEYONDLABS_VT_API_KEY", "").strip()
+    if not api_key:
+        return None
+
+    url = f"{VT_API_BASE}/files/{indicator}"
+    try:
+        async with httpx.AsyncClient(timeout=VT_TIMEOUT_SECONDS) as client:
+            response = await client.get(url, headers={"x-apikey": api_key, "user-agent": "BeyondLabs"})
+    except Exception as exc:
+        return finding(
+            indicator=indicator,
+            indicator_type="hash",
+            verdict="unknown",
+            confidence="low",
+            trust_type="external_provider",
+            source="VirusTotal",
+            method="external provider lookup (opt-in)",
+            summary=f"External reputation lookup failed: {type(exc).__name__}.",
+            limitations="A failed external lookup says nothing about the hash itself; treat as not-checked.",
+            recommended_next_step="Retry later or use static file triage; do not infer innocence from the failure.",
+        )
+
+    if response.status_code == 404:
+        return finding(
+            indicator=indicator,
+            indicator_type="hash",
+            verdict="unknown",
+            confidence="low",
+            trust_type="external_provider",
+            source="VirusTotal",
+            method="external provider lookup (opt-in)",
+            summary="Hash is unknown to the provider's corpus.",
+            limitations="Absence from the provider corpus does not mean the file is benign.",
+            recommended_next_step="Rely on local triage and case evidence for this indicator.",
+        )
+
+    if response.status_code != 200:
+        return finding(
+            indicator=indicator,
+            indicator_type="hash",
+            verdict="unknown",
+            confidence="low",
+            trust_type="external_provider",
+            source="VirusTotal",
+            method="external provider lookup (opt-in)",
+            summary=f"External provider returned HTTP {response.status_code}.",
+            limitations="Provider errors are point-in-time; retrying may succeed.",
+            recommended_next_step="Retry later and correlate with case evidence.",
+        )
+
+    attributes = (response.json() or {}).get("data", {}).get("attributes", {})
+    stats = attributes.get("last_analysis_stats") or {}
+    verdict, confidence = vt_verdict_from_stats(stats)
+
+    return finding(
+        indicator=indicator,
+        indicator_type="hash",
+        verdict=verdict,
+        confidence=confidence,
+        trust_type="external_provider",
+        source="VirusTotal",
+        method="external provider lookup (opt-in)",
+        freshness="point_in_time",
+        summary=(
+            f"Community/vendor scan engines report {stats.get('malicious', 0)} malicious "
+            f"and {stats.get('suspicious', 0)} suspicious detections."
+        ),
+        evidence=[f"last_analysis_stats: {stats}"],
+        limitations="Labels are point-in-time community/vendor data, not proof; hashes can be repurposed and engines disagree.",
+        recommended_next_step="Correlate with file origin and case evidence before acting on the verdict.",
+        raw_details={"last_analysis_stats": stats},
+    )
+
+
+async def run_local_reputation(indicator: str, indicator_type: str) -> list[dict]:
+    if indicator_type in {"hash", "hash_md5", "hash_sha1", "hash_sha256"}:
+        return [local_hash_finding(indicator, indicator_type)]
+
+    if indicator_type == "ip":
+        return [local_reputation_finding(indicator, indicator_type, analyze_ip_reputation(indicator))]
+
+    if indicator_type == "domain":
+        return [local_reputation_finding(indicator, indicator_type, analyze_domain_reputation(indicator))]
+
+    if indicator_type == "url":
+        return [local_reputation_finding(indicator, indicator_type, analyze_url_reputation(indicator))]
+
+    if indicator_type == "email":
+        domain = indicator.split("@")[-1].lower()
+        raw = analyze_domain_reputation(domain)
+        item = local_reputation_finding(domain, "domain", raw)
+        item["summary"] = f"Checked sender domain from email indicator. {item['summary']}"
+        return [item]
+
+    return [
+        finding(
+            indicator=indicator,
+            indicator_type=indicator_type,
+            verdict="unknown",
+            confidence="unknown",
+            trust_type="local_deterministic",
+            source="BeyondLabs IOC classifier",
+            method="indicator type classification",
+            summary="No local reputation workflow is available for this indicator type.",
+            limitations="Unsupported indicator types require manual review.",
+            recommended_next_step="Extract a URL, domain, IP, hash, or email and retry.",
+        )
+    ]
+
+
+async def enrich_indicator_reputation(indicator: str, indicator_type: str) -> dict:
+    normalized = normalize_indicator_for_type(indicator, indicator_type)
+    findings = await run_local_reputation(normalized, indicator_type)
+    note = "BeyondLabs reputation enrichment runs deterministic backend/local checks only. It does not query external reputation providers."
+
+    if indicator_type in {"hash", "hash_md5", "hash_sha1", "hash_sha256"}:
+        external = await vt_hash_finding(normalized)
+        if external is not None:
+            findings.append(external)
+            note = (
+                "Local checks ran first; an opt-in external provider lookup (BEYONDLABS_VT_API_KEY) was also performed "
+                "for this hash and its finding is labeled with the provider source."
+            )
+
+    return {
+        "indicator": indicator,
+        "normalized": normalized,
+        "type": indicator_type,
+        "checked_at": utc_now(),
+        "summary": {
+            "backend_findings": len(findings),
+            "total_findings": len(findings),
+            "note": note,
+        },
+        "findings": findings,
+    }
+
+
+def analyze_ip_reputation(ip: str) -> dict:
+    findings = []
+    clean = ip.strip()
+
+    try:
+        parsed = ipaddress.ip_address(clean)
+    except Exception:
+        return {"valid": False, "error": "Invalid IP address."}
+
+    if parsed.is_private:
+        add_finding(findings, "info", "Private IP address", "This IP belongs to a private/internal range.", "Use local context and internal logs for investigation.")
+
+    if parsed.is_loopback:
+        add_finding(findings, "info", "Loopback IP address", "This IP points to localhost.", "Verify whether this is expected in the log/source.")
+
+    if parsed.is_multicast:
+        add_finding(findings, "low", "Multicast IP address", "This IP is in multicast space.", "Review whether multicast traffic is expected.")
+
+    if parsed.is_reserved:
+        add_finding(findings, "low", "Reserved IP address", "This IP is in reserved address space.", "Verify the source of this indicator.")
+
+    score = score_findings(findings)
+
+    return {
+        "indicator": clean,
+        "type": "ip",
+        "version": parsed.version,
+        "is_private": parsed.is_private,
+        "is_global": parsed.is_global,
+        "is_loopback": parsed.is_loopback,
+        "is_multicast": parsed.is_multicast,
+        "is_reserved": parsed.is_reserved,
+        "summary": {
+            "score": score,
+            "rating": rating_from_score(score),
+            "total_findings": len(findings),
+        },
+        "findings": findings,
+        "note": "Backend/local heuristic only. No external IP reputation lookup was performed.",
+    }
+
+
+def analyze_domain_reputation(domain: str) -> dict:
+    findings = []
+    clean = domain.strip().lower()
+
+    if "://" in clean:
+        parsed = urlparse(clean)
+        clean = parsed.hostname or clean
+
+    clean = clean.strip(".")
+    parts = clean.split(".")
+    tld = parts[-1] if len(parts) > 1 else ""
+
+    if len(parts) < 2:
+        add_finding(findings, "medium", "Invalid or incomplete domain", "The value does not look like a full domain.", "Provide a full domain such as example.com.")
+
+    if tld in SUSPICIOUS_TLDS:
+        add_finding(findings, "low", "Suspicious or commonly abused TLD", f"The domain uses .{tld}.", "Do not treat TLD alone as malicious, but review with extra context.")
+
+    if clean in URL_SHORTENERS:
+        add_finding(findings, "medium", "URL shortener domain", f"{clean} is a known URL shortener.", "Expand shortened URLs safely before visiting.")
+
+    if clean.count("-") >= 2:
+        add_finding(findings, "low", "Multiple hyphens in domain", "The domain contains multiple hyphens.", "Review for typosquatting or impersonation.")
+
+    if any(char.isdigit() for char in clean):
+        add_finding(findings, "info", "Digits in domain", "The domain contains numbers.", "Review for brand impersonation or lookalike naming.")
+
+    score = score_findings(findings)
+
+    return {
+        "indicator": clean,
+        "type": "domain",
+        "tld": tld,
+        "summary": {
+            "score": score,
+            "rating": rating_from_score(score),
+            "total_findings": len(findings),
+        },
+        "findings": findings,
+        "note": "Backend/local heuristic only. No WHOIS/RDAP or reputation lookup was performed.",
+    }
+
+
+def analyze_url_reputation(url: str) -> dict:
+    refanged = refang_text(url.strip())
+
+    if not refanged.startswith(("http://", "https://")):
+        refanged = "http://" + refanged
+
+    parsed = urlparse(refanged)
+    hostname = parsed.hostname or ""
+    findings = []
+
+    if parsed.scheme != "https":
+        add_finding(findings, "medium", "Non-HTTPS URL", f"Detected scheme: {parsed.scheme}", "Be careful with links that do not use HTTPS.")
+
+    if hostname in URL_SHORTENERS:
+        add_finding(findings, "medium", "URL shortener detected", f"{hostname} is a known URL shortener.", "Expand safely before visiting.")
+
+    if "@" in parsed.netloc:
+        add_finding(findings, "high", "Userinfo symbol in URL", "The URL contains @, which can hide the true destination.", "Inspect the real hostname carefully.")
+
+    domain_result = analyze_domain_reputation(hostname) if hostname else None
+
+    if domain_result:
+        findings.extend(domain_result.get("findings", []))
+
+    score = score_findings(findings)
+
+    return {
+        "indicator": url,
+        "type": "url",
+        "normalized": refanged,
+        "defanged": defang_text(refanged),
+        "hostname": hostname,
+        "path": parsed.path,
+        "query": parsed.query,
+        "summary": {
+            "score": score,
+            "rating": rating_from_score(score),
+            "total_findings": len(findings),
+        },
+        "findings": findings,
+        "note": "Backend/local URL structure analysis only. The URL was not fetched, opened, rendered, or checked against reputation providers.",
+    }

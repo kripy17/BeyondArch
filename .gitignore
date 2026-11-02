@@ -1,0 +1,62 @@
+/screenshot-*.png
+
+# Agent profile / instructions
+/AGENTS.md
+/.openclaude-profile.json
+
+# Build output
+/frontend/dist/
+/frontend/dist-bak/
+
+# Generated knowledge graph
+/graphify-out/
+
+# Agent profile
+/.openclaude-profile.json
+
+# Python cache
+/.pytest_cache/
+/backend/.venv/
+__pycache__/
+*.pyc
+
+# Node dependencies
+/frontend/node_modules
+/frontend/node_modules/
+/node_modules
+/node_modules/
+/package-lock.json
+
+# Vite dependency cache (build artifact)
+/.vite/
+
+# OpenCTI reference checkout (build-time study material only)
+/opencti_refrence/
+
+# Build-time design/audit docs — local reference only, not for the repo
+/docs/archive/
+
+# Agent tool config
+/.opencode/
+
+# Test artifacts
+/test-results/
+frontend/test-results/
+test-results/
+/frontend/responsive-screenshots/
+
+# Logs
+*.log
+
+# Environment
+/backend/.env
+humm.txt
+
+# Playwright MCP session artifacts
+/.playwright-mcp/
+
+# Stray local db (freebuff desktop artifact)
+/.freebuff/
+
+# TypeScript incremental build info
+frontend/tsconfig.tsbuildinfo

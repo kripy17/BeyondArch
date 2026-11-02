@@ -1,0 +1,23 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      # Published on host loopback only — the recon endpoints (DNS, WHOIS,
+      # RDAP, port-scan runners) are unauthenticated by design for local
+      # practice use. To serve other machines deliberately, change to
+      # "8000:8000" and put the backend behind your own auth/reverse proxy.
+      - "127.0.0.1:8000:8000"
+    environment:
+      # Frontend container serves on :80 (default HTTP port → no port in
+      # the origin). :5173 is included too so a local `npm run dev`
+      # frontend can also talk to this dockerized backend.
+      - BEYONDLABS_CORS_ORIGINS=http://localhost,http://127.0.0.1,http://localhost:5173,http://127.0.0.1:5173
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
