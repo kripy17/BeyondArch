@@ -1,6 +1,6 @@
-# Contributing
+# Contributing to BeyondArch
 
-Thanks for helping improve BeyondLabs. Keep contributions scoped, practical, and aligned with the project goal: a local cybersecurity/SOC workspace with honest, evidence-aware outputs.
+Thanks for helping improve BeyondArch. Keep contributions scoped, practical, and aligned with the project goal: a local-first cybersecurity and SOC workspace with honest, evidence-aware outputs.
 
 ## Workflow
 
@@ -31,20 +31,22 @@ Do not mix unrelated cleanup, redesign, backend behavior changes, and feature wo
 
 ## Required Checks
 
-Frontend changes:
+Frontend checks:
 
 ```bash
 cd frontend
 npm run lint
+npm run typecheck
+npm run test
 npm run build
-npm run test:e2e   # visual-regression baselines + core SOC flows (Playwright)
 ```
 
-Backend changes:
+Backend checks:
 
 ```bash
 cd backend
 python -m compileall app
+python -m pytest tests/
 ```
 
 ## Security Expectations

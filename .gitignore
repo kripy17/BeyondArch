@@ -77,6 +77,10 @@ backend/.venv/
 /opencti_refrence/
 /graphify-out/
 /.script-backups/
+/exports/
+/reports/
+/timeline-exports/
+/.beyondlabs/
 
 # Local Tooling & Agent Artifacts
 /AGENTS.md

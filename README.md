@@ -1,233 +1,149 @@
 <div align="center">
-  <img src="assets/banner.svg" alt="BeyondArch" width="100%">
+  <img src="assets/banner.svg" alt="BeyondArch Security Workbench" width="100%">
 </div>
 
 <div align="center">
 
-<p>
-<strong>Local-First SOC Investigation, DFIR Triage & Detection Engineering Workbench</strong><br>
-Privacy-preserving, offline-capable, and analyst-led — 25+ integrated workspaces, one app, your machine.
-</p>
+# BeyondArch
 
-[![React](https://img.shields.io/badge/React-19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev)
-[![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=fff)](https://vite.dev)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=fff)](https://tailwindcss.com)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=fff)](https://typescriptlang.org)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.136-009688?style=for-the-badge&logo=fastapi&logoColor=fff)](https://fastapi.tiangolo.com)
-[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=fff)](https://python.org)
-[![Vitest](https://img.shields.io/badge/Vitest-859_Tests_Passing-6E9F18?style=for-the-badge&logo=vitest&logoColor=fff)](https://vitest.dev)
+**Local-First SOC Investigation, DFIR Triage & Detection Engineering Workbench**
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-8B0000?style=for-the-badge&labelColor=000000)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-000000?style=for-the-badge&logo=linux&logoColor=eeeeee)]()
-[![Zero Telemetry](https://img.shields.io/badge/telemetry-100%25_local_/_zero_tracking-006400?style=for-the-badge&labelColor=000000)]()
+Privacy-preserving, offline-capable, and analyst-led — 25+ integrated workspaces running entirely on your machine.
 
-**[Quick Start](#quick-start)** · **[Investigation Flow](#investigation-flow)** · **[Workspace Map](#workspace-map)** · **[Architecture](#system-architecture)** · **[Safety Model](#safety-model)** · **[Contributing](CONTRIBUTING.md)**
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/kripy17/BeyondArch/actions/workflows/ci.yml/badge.svg)](https://github.com/kripy17/BeyondArch/actions)
+[![React](https://img.shields.io/badge/React-19.2-20232A?logo=react&logoColor=61DAFB)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=fff)](https://typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-8.1-646CFF?logo=vite&logoColor=fff)](https://vite.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.2-06B6D4?logo=tailwindcss&logoColor=fff)](https://tailwindcss.com)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.136-009688?logo=fastapi&logoColor=fff)](https://fastapi.tiangolo.com)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=fff)](https://python.org)
+[![Tests](https://img.shields.io/badge/Tests-859%20Passed-2ea44f?logo=vitest&logoColor=fff)](https://vitest.dev)
+[![Telemetry](https://img.shields.io/badge/Telemetry-Zero%20Outbound-success)](#privacy--storage-model)
+
+[Quick Start](#quick-start) • [Workspaces](#core-workspaces) • [Investigation Pipeline](#investigation-pipeline) • [Architecture](#architecture) • [Docker](#docker-deployment) • [Contributing](CONTRIBUTING.md)
 
 </div>
 
 ---
 
-## Why BeyondArch
+## Overview
 
-Practicing defensive security and triage operations traditionally presents an uncomfortable compromise: either deploy and maintain a complex, resource-heavy multi-VM lab, or paste sensitive corporate telemetry and artifacts into external cloud sandboxes.
+Defensive security workflows often force an unacceptable choice: manage heavy, fragile multi-VM labs that consume tens of gigabytes of RAM, or paste sensitive enterprise indicators into cloud-hosted platforms.
 
-**BeyondArch is the local-first alternative**: an enterprise-grade SOC and DFIR workbench that runs end-to-end on your local machine. It unifies evidence intake, static artifact dissection, multi-dialect SIEM threat hunting, ATT&CK correlation, and detection engineering into a cohesive, quiet, keyboard-driven analyst workspace.
+**BeyondArch** provides a local-first alternative. It delivers an integrated, distraction-free environment for incident response, threat hunting, and detection engineering on your own workstation:
 
-| Capability | Cloud SOC Sandbox | Heavy VM Lab | BeyondArch |
+- **100% Local Execution**: Analysis runs strictly in your browser and local loopback API (`127.0.0.1`). Zero telemetry, zero external phone-home calls.
+- **Unified Analyst Bus**: Pivot indicators seamlessly across intake, timeline, SIEM queries, and case dossiers without re-pasting data.
+- **Instant SIEM Cross-Translation**: Convert detection logic and hunt queries on the fly between Splunk SPL, Microsoft Sentinel KQL, Elastic EQL, and Velociraptor VQL.
+- **Safe Static Forensics**: Dissect PE files, Office documents, email headers, and PCAP streams without risking hostile execution.
+
+| Operational Dimension | Cloud Triage Services | Heavy Multi-VM Labs | BeyondArch |
 |---|---|---|---|
-| **Setup Time** | Subscription onboarding | Hours of provisioning | **Two commands (`./install.sh` && `./run.sh`)** |
-| **Data Privacy** | Artifacts sent to third-party cloud | Stays in VM | **100% Local (Zero outbound telemetry)** |
-| **Resource Footprint** | Low local (heavy cloud) | 16–32 GB RAM overhead | **Lightweight (~150 MB local footprint)** |
-| **Pipeline Integration** | Disjointed point tools | Requires manual scripting | **Intake → Triage → SIEM → Case → Detection → Report** |
-| **Query Portability** | Vendor lock-in | Single dialect | **Instant cross-translation (SPL ↔ KQL ↔ EQL ↔ VQL)** |
-
----
-
-## Table of Contents
-
-- [Why BeyondArch](#why-beyondarch)
-- [Overview & Technical Stack](#overview--technical-stack)
-- [Screenshots](#screenshots)
-- [Investigation Flow](#investigation-flow)
-- [Workspace Map (25+ Modules)](#workspace-map)
-- [System Architecture](#system-architecture)
-- [Quick Start](#quick-start)
-- [Docker Deployment](#docker-deployment)
-- [Safety Model & Boundaries](#safety-model--boundaries)
-- [Privacy & Storage Modes](#privacy--storage-modes)
-- [Repo Layout](#repo-layout)
-- [Quality Engineering & Verification](#quality-engineering--verification)
-- [Settings & Customization](#settings--customization)
-- [FAQ](#faq)
-- [Contributing](#contributing)
-- [License](#license)
-
----
-
-## Overview & Technical Stack
-
-BeyondArch is built with modern, battle-tested technologies designed for low latency, zero horizontal layout shift, and offline resilience:
-
-| Layer | Technologies |
-|---|---|
-| **Frontend Framework** | React 19 · Vite 8 · TypeScript 5.8 · TanStack Router (file-based routing) |
-| **Styling & Design System** | Tailwind CSS v4 · Radix UI primitives · Lucide Icons · CSS variable themes |
-| **Visualizations & Graphs** | XYFlow (`@xyflow/react`) topology engine · Recharts telemetry histograms |
-| **Backend API (Optional)** | FastAPI 0.136 · Uvicorn · Pydantic v2 · Python 3.10+ |
-| **Detection & PCAP Engines** | pySigma (Splunk, Elastic, Sentinel) · Scapy · tldextract · dnspython |
-| **Testing & Verification** | Vitest 4 (87 test suites, 859 tests) · Playwright (multi-viewport verification) |
-| **Platforms** | Linux (Arch, Debian, Ubuntu, Fedora) · macOS (Homebrew) · Windows (PowerShell) |
+| **Data Privacy** | Telemetry sent to third parties | Stays inside VM | **100% On-Device (No outbound traffic)** |
+| **Startup Overhead** | Cloud auth & subscription setup | Minutes of booting & snapshots | **Sub-second launch (`./run.sh`)** |
+| **Memory Footprint** | Low local (heavy remote) | 16–32 GB RAM required | **~150 MB local footprint** |
+| **Workflow State** | Fragmented SaaS interfaces | Manual file sharing & scripts | **Single connected case & graph bus** |
+| **Query Flexibility** | Single proprietary syntax | Vendor-specific agents | **Multi-dialect (SPL ↔ KQL ↔ EQL ↔ VQL)** |
 
 ---
 
 ## Screenshots
 
+<div align="center">
 <table>
-<tr>
-<td align="center" width="50%">
-<img src="assets/screenshot-intake.svg" width="100%"/><br/>
-<sub><b>Evidence Intake & Fast-Triage</b> — Multi-observable parser with live defang/refang</sub>
-</td>
-<td align="center" width="50%">
-<img src="assets/screenshot-siem.svg" width="100%"/><br/>
-<sub><b>SIEM Hunting Workspace</b> — Cross-dialect query translation & facet filtering</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="50%">
-<img src="assets/screenshot-detection.svg" width="100%"/><br/>
-<sub><b>Detection Studio & Sandbox</b> — Sigma/YARA/Suricata authoring & noise suppression</sub>
-</td>
-<td align="center" width="50%">
-<img src="assets/screenshot-case.svg" width="100%"/><br/>
-<sub><b>Case Management & Dossiers</b> — Attack timeline, Diamond Model & CISO briefings</sub>
-</td>
-</tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="assets/screenshot-intake.svg" alt="Evidence Intake & Triage" width="100%"><br>
+      <b>Evidence Intake & Triage</b> — Multi-observable parser with defang controls
+    </td>
+    <td align="center" width="50%">
+      <img src="assets/screenshot-siem.svg" alt="SIEM Threat Hunting" width="100%"><br>
+      <b>SIEM Threat Hunting</b> — Cross-dialect query translation & facet filtering
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="assets/screenshot-detection.svg" alt="Detection Studio" width="100%"><br>
+      <b>Detection Studio</b> — Sigma, YARA & Suricata authoring with AST validation
+    </td>
+    <td align="center" width="50%">
+      <img src="assets/screenshot-case.svg" alt="Case Desk & Executive Dossier" width="100%"><br>
+      <b>Case Desk & Dossiers</b> — Attack timeline, MITRE coverage & CISO briefings
+    </td>
+  </tr>
 </table>
+</div>
 
 ---
 
-## Investigation Flow
+## Investigation Pipeline
 
-BeyondArch organizes incident investigation as a continuous, compounding lifecycle rather than disconnected silos:
+Investigations in BeyondArch follow a compounding lifecycle where every stage informs the next:
 
 ```mermaid
-%%{init: {'theme':'base', 'themeVariables': {
-  'primaryColor':'#141414',
-  'primaryBorderColor':'#2a2a2a',
-  'primaryTextColor':'#f0f0f0',
-  'lineColor':'#4a4a4a',
-  'fontFamily':'JetBrains Mono, monospace',
-  'fontSize':'12px'
-}}}%%
 flowchart TD
-    A["1. Ingestion & Fast-Triage<br/>Hash · URL · Email · IP · PCAP · Log"] --> B["2. Deep Threat Dissection<br/>PE Headers · Capa Matrix · MTA Route · Shannon Entropy"]
-    B --> C["3. SIEM & Log Hunting<br/>SPL / KQL / EQL / VQL · C2 Beacon Cadence · Payload Decode"]
-    C --> D["4. Threat Intelligence & ATT&CK<br/>14-Column Matrix · Diamond Model · Actor Attribution"]
-    D --> E["5. Case Desk & Attack Timeline<br/>Playback Scrubber · Velocity Metrics · Kill Chain Flow"]
-    E --> F["6. Detection Engineering<br/>Sigma Auto-Tuning · YARA Compiler · Suricata Rule Generator"]
-    F --> G["7. Executive Dossier & SOAR<br/>CISO Briefing · SEC 8-K / GDPR Assessment · Runbook Actions"]
+    A["1. Evidence Ingestion<br/>Raw text · Logs · Files · URLs · PCAP"] --> B["2. Static Threat Dissection<br/>PE Headers · Capa Matrix · MTA Route · Entropy"]
+    B --> C["3. SIEM & Log Hunting<br/>SPL / KQL / EQL / VQL · C2 Beacon Cadence"]
+    C --> D["4. Threat Intel & MITRE<br/>14-Column Matrix · Diamond Model · Adversary Attribution"]
+    D --> E["5. Incident Desk & Timeline<br/>Playback Scrubber · Velocity Metrics · Kill Chain Flow"]
+    E --> F["6. Detection Engineering<br/>Sigma Compilation · YARA Synthesis · Suricata Rules"]
+    F --> G["7. Case Deliverables<br/>CISO Briefing · Containment Checklist · Legal Package"]
 ```
-
-Every workspace connects through an in-memory and local storage handoff bus (`beyondlabs.pendingArtifact` and `beyondlabs.locker`), allowing you to pivot seamlessly between analyzers without losing state or context.
 
 ---
 
-## Workspace Map
+## Core Workspaces
 
-BeyondArch provides **over 25 specialized workspaces** categorized into six operational pillars:
+BeyondArch groups **over 25 specialized modules** into five operational pillars:
 
-### 1. Command Deck & Fast-Triage
-- **Command Deck (`/`)**: Central operational overview featuring the DEFCON Threat Posture bar, 5-KPI telemetry ribbon (MTTA, MTTD, MTTR, Active Incidents, Dwell Time), active case sentinel, and chronological security feed.
-- **Universal Fast-Triage Dock**: Omnibar input accessible via `/` hotkey for instant indicator classification (IP, Domain, CVE, Hash, Encoded Command) with one-click case attachment.
+### 1. Evidence Intake & Triage
+* **Universal Intake (`/intake`)**: Ingest logs, syslog dumps, emails, and threat feeds. Includes realistic APT presets (Volt Typhoon, BlackCat, APT28).
+* **Automated Triage (`/triage`)**: Severity-scoring triage desk with explainable containment recommendations.
+* **Email & Phishing Dissector (`/phishing`)**: Full RFC 5322 header parsing, SPF/DKIM/DMARC authentication verification, MTA transit timeline, and link discrepancy analysis.
+* **URL & Domain Dissector (`/url`)**: RFC 3986 component decomposition, punycode/homograph spoof detection, and Shannon entropy calculation.
+* **File & Malware Forensics (`/file`, `/attachment`)**: Static PE header inspection (DOS/NT/Optional headers, sections, exports), Capa ATT&CK capability matching, macro extraction, and hex preview.
+* **Windows & Sysmon Logs (`/logs`)**: Security event analysis (Event IDs 4624, 4688, 4672, 7045) and Sysmon process tree inspection.
+* **PCAP Network Forensics (`/pcap`)**: Wireshark display filter evaluation, TCP stream follower, Zeek log viewer, and Suricata IDS rule extraction.
 
-### 2. Intake & Threat Triage
-- **Evidence Intake (`/intake`)**: Multi-observable parser supporting raw log dumps, syslog streams, and threat scenario presets (APT28, Volt Typhoon, BlackCat ransomware).
-- **Automated Triage Analysis (`/triage`)**: Queue disposition interface with explainable confidence scoring, decision criteria rationale, and containment recommendations.
-- **Phishing Email Dissector (`/phishing`)**: Full email header inspection, SPF/DKIM/DMARC authentication matrix, transit MTA hop timeline with clock-skew detection, link discrepancy grid, and phishing containment console.
-- **Deep URL Dissector & Defense Playbook (`/url`)**: RFC 3986 component anatomy, homograph/punycode spoof detector, Shannon entropy calculation, and automated mitigation playbooks.
-- **Malware & File Forensics (`/file`, `/attachment`)**: Static PE header dissection (DOS/NT/Optional headers, sections, imports/exports), Capa ATT&CK capability matrix, simulated detonation trace, Office/PDF macro extractor, hex inspector, and automated YARA rule compiler.
-- **Windows Security & Sysmon Event Analyzer (`/logs`)**: Dedicated forensic review of Windows Security Event IDs (4688, 4624, 4672, 7045) and Sysmon telemetry (Process Create, Network Connect, Image Load), complete with process tree parent-child visualization.
-- **PCAP Packet Forensics (`/pcap`)**: Wireshark display filter bar, TCP stream reassembly modal, Zeek DNS/Connection log viewer, automated Suricata IDS signature synthesis, and perimeter isolation script generation.
+### 2. Incident Desk & Intelligence
+* **Incident Case Management (`/case`)**: Evidence aggregation, timeline markers, and automated multi-audience report generators:
+  * **CISO Executive Briefing**: Strategic executive impact overview.
+  * **SOC Containment Action List**: Tactical firewall, EDR, and account isolation commands.
+  * **Chain-of-Custody Dossier**: Cryptographic IOC hash digests conforming to ISO/IEC 27037 standards.
+  * **Regulatory Compliance Evaluator**: Form 8-K (SEC 4-day disclosure) and GDPR Article 33 assessment.
+* **Master Attack Timeline (`/timeline`)**: Attack progression scrubber with event velocity metrics, phase filtering, and dwell-time calculation.
+* **Intrusion Topology Graph (`/investigation`)**: Interactive node-link graph powered by XYFlow mapping shared infrastructure and blast radius.
+* **Threat Intelligence & Attribution (`/threat-actors`, `/intel`)**: Adversary profiling matching observed TTPs against known threat groups with STIX 2.1 export.
 
-### 3. Investigation, Case Management & Threat Intel
-- **Incident Case Desk (`/case`)**: Full-featured case management supporting evidence binders, chronological notes, and automated generation of multi-audience deliverables:
-  - **CISO Executive Incident Briefing**: Strategic board-ready impact narrative.
-  - **SOC Engineering Containment Checklist**: Tactical IP tables, EDR isolation, and Entra ID session revocation scripts.
-  - **DFIR & Law Enforcement Handover Package**: Cryptographic IOC hash digest and chain-of-custody attestations conforming to ISO/IEC 27037.
-  - **Regulatory Compliance Evaluator**: Form 8-K Item 1.05 (SEC 4-Day mandate) and GDPR Art. 33 / CCPA breach disclosure evaluator.
-  - **SOC Shift Handover Protocol (SOC-OP-04, `/activity`)**: Standard operational watch turnover log with DEFCON posture, uncontained case matrix, and digital sign-off.
-- **Master Attack Timeline (`/timeline`)**: Interactive attack playback scrubber, velocity metrics (dwell time, events/min, milestone counters), time-slice filtering, and automated MITRE tactic phase flow.
-- **Cross-Case Intrusion Topology Graph (`/investigation`)**: Interactive node-link topology powered by XYFlow mapping shared C2 infrastructure, blast radius metrics, and pivot relationships.
-- **Threat Actor Attribution & Intelligence (`/threat-actors`, `/intel`)**: Attribution scoring engine matching observed TTPs against known adversaries, targeted CVE vulnerability tracker, TLS/JA3/JARM fingerprinter, and STIX 2.1 JSON exporter.
+### 3. Threat Hunting & SIEM
+* **SIEM Hunting Console (`/siem`)**: Search interface supporting Splunk SPL, Microsoft Sentinel KQL, and Elastic queries with facet histograms and payload deobfuscation.
+* **Cross-Dialect Query Transpiler**: Instant conversion across Splunk SPL, Microsoft Sentinel KQL, Elastic EQL, and Velociraptor VQL.
+* **MITRE ATT&CK Matrix (`/mitre`)**: Interactive 14-column tactic grid with coverage heatmaps and ATT&CK Navigator JSON import/export.
+* **Shift Handover Protocol (`/activity`)**: Standard operational turnover log (SOC-OP-04) recording current DEFCON posture and open cases.
 
-### 4. Detection Engineering & SIEM
-- **SIEM Threat Hunting Studio (`/siem`)**: Search bar supporting Splunk SPL, Microsoft Sentinel KQL, and Elastic queries with syntax highlighting, field facet histograms, decoded payload popovers, and deterministic C2 beaconing cadence detector.
-- **Cross-SIEM Query Translator**: Real-time transpiler converting hunting queries between Splunk SPL, Sentinel KQL, Elastic EQL, and Velociraptor VQL.
-- **Detection Studio & Sandbox (`/detection`)**: Multi-dialect rule workbench for Sigma, YARA, Suricata IDS, and KQL rules with live simulation against historical events, AST validation, and canary deployment checklists.
-- **MITRE ATT&CK Enterprise Matrix (`/mitre`)**: Interactive 14-column tactic grid with technique coverage heatmaps and navigator layer export/import.
-- **Sigma Rule Tester & Transpiler (`/sigma-tester`)**: Real-time pySigma compiler translating rules into 5 enterprise SIEM backends with noise risk and false-positive estimation.
+### 4. Detection Engineering Studio
+* **Detection Sandbox (`/detection`)**: Multi-rule authoring suite for Sigma, YARA, and Suricata with syntax highlighting and event simulation.
+* **Sigma Tester & Compiler (`/sigma-tester`)**: Real-time pySigma transpiler targeting 5 enterprise SIEM backends with false-positive estimation.
+* **Threat Hunting Arsenal (`/snippets`)**: Curated repository of production hunting queries organized by adversary technique.
 
-### 5. DFIR Operations & Engineering Toolkit
-- **SOAR Operations Deck (`/operations`)**: Pre-built incident response runbooks (malware containment, phishing takedown, credential compromise, ransomware isolation) with step-by-step interactive execution and timeline auditing.
-- **Universal Log Parser Station (`/parser`)**: Multi-format IOC extractor, regex field parser, and in-memory obfuscation decoders (Base64, Hex, URL, XOR).
-- **CyberChef Recipe Station (`/chef`)**: 50+ offline cryptographic and string transformations, Shannon entropy visualization, magic byte sniffer, and pre-configured SOC deobfuscation presets.
-- **Forensic Diff Engine (`/diff`)**: Side-by-side artifact, rule, and script comparison with character-level diffing.
-- **SOC Regex Playground (`/regex-playground`)**: Real-time regular expression tester with SOC-specific token highlighting and pre-tested detection patterns.
-- **Threat Hunting Playbook Arsenal (`/snippets`)**: Curated multi-dialect query catalog with 1-click SIEM execution and automated Sigma rule tuning.
-- **SOC Standard Operating Procedures & Guide (`/guide`)**: Curated runbook blueprints, Windows event ID cheatsheets, and command cheat cards.
-
-### 6. System & Workspace Customization
-- **Workspace Settings (`/settings`)**: Theme gallery with 8 professional palettes, 16 accent presets, 12 monospaced typography pairings, density controls, customizable sidebar grouping, and privacy storage controls.
-
----
-
-## System Architecture
-
-```mermaid
-%%{init: {'theme':'base', 'themeVariables': {
-  'primaryColor':'#141414',
-  'primaryBorderColor':'#2a2a2a',
-  'primaryTextColor':'#f0f0f0',
-  'lineColor':'#4a4a4a',
-  'fontFamily':'JetBrains Mono, monospace',
-  'fontSize':'12px'
-}}}%%
-flowchart LR
-    subgraph Browser["Client Browser (Frontend Workspace)"]
-        UI["React 19 + TanStack Router UI"]
-        ENGINES["Client Analysis Engines<br/>PE Dissector · Capa Matcher<br/>URL Parser · Regex · CyberChef"]
-        STORE[("Browser Storage Bus<br/>Session / Persist / None")]
-    end
-
-    subgraph Host["Local Host (Optional Backend)"]
-        API["FastAPI Local Server (:8000)"]
-        PYSIGMA["pySigma Compiler<br/>Splunk · Sentinel · Elastic"]
-        SCAPY["Scapy PCAP Engine"]
-    end
-
-    UI <--> ENGINES
-    UI <--> STORE
-    UI <-->|"Local Loopback Only<br/>http://127.0.0.1:8000"| API
-    API <--> PYSIGMA
-    API <--> SCAPY
-```
-
-- **Zero Cloud Leakage**: No external analytics, no telemetry trackers, no phone-home mechanisms.
-- **Graceful Offline Degradation**: The frontend functions as a fully capable static workstation even if the Python backend is stopped.
+### 5. DFIR Utilities & SOAR
+* **SOAR Operations Hub (`/operations`)**: Interactive containment runbooks for malware outbreak, phishing response, credential compromise, and ransomware isolation.
+* **CyberChef Station (`/chef`)**: 50+ offline string, cryptographic, and encoding transformations with magic-byte identification.
+* **Universal Log Parser (`/parser`)**: High-speed regex extraction engine for IPs, URLs, hashes, domains, and Base64 payloads.
+* **Forensic Diff Engine (`/diff`)**: Visual side-by-side comparison for configs, script revisions, and decoded payloads.
+* **Regex Playground (`/regex-playground`)**: SOC-specific regex validation sandbox with token breakdown.
 
 ---
 
 ## Quick Start
 
 ### Prerequisites
-- **Node.js**: v18.0.0 or higher (v20+ recommended)
-- **Python**: v3.10 or higher
-- **npm**: v9.0.0 or higher
+* **Node.js**: v18.0.0+ (v20+ recommended)
+* **Python**: v3.10+ (optional, needed for backend pySigma & Scapy services)
+* **npm**: v9.0.0+
 
 ### Linux & macOS
-
-The setup script automatically detects your package manager (`pacman`, `apt`, `dnf`, or `brew`):
 
 ```bash
 # 1. Clone repository
@@ -237,11 +153,11 @@ cd BeyondArch
 # 2. Run automated installer
 ./install.sh
 
-# 3. Start both backend and frontend
+# 3. Launch application
 ./run.sh
 ```
 
-To run only the frontend without backend dependencies:
+To run exclusively in frontend mode without local Python dependencies:
 ```bash
 ./run.sh --frontend-only
 ```
@@ -249,164 +165,131 @@ To run only the frontend without backend dependencies:
 ### Windows (PowerShell)
 
 ```powershell
-# 1. Run automated installer
+# 1. Run setup wizard
 .\install.ps1
 
-# 2. Launch application
+# 2. Start services
 .\run.ps1
 ```
 
-### Accessing the Workspaces
+### Local Endpoints
 
-| Service | Local URL | Description |
+| Component | URL | Notes |
 |---|---|---|
-| **Frontend UI** | `http://localhost:5173` | React 19 Workspace Shell |
-| **Backend API** | `http://localhost:8000` | FastAPI Analysis Server |
-| **Interactive Docs** | `http://localhost:8000/docs` | Swagger / OpenAPI Documentation |
+| **Frontend Workspace** | `http://localhost:5173` | React 19 UI shell |
+| **Backend REST API** | `http://localhost:8000` | FastAPI analysis services |
+| **Interactive API Docs** | `http://localhost:8000/docs` | OpenAPI / Swagger specification |
 
 ---
 
 ## Docker Deployment
 
-BeyondArch includes a container configuration that publishes strictly to host loopback (`127.0.0.1`):
+BeyondArch includes isolated container support bound strictly to the local loopback interface (`127.0.0.1`):
 
 ```bash
-# Build and run containers
-docker compose up --build
+# Build and start services
+docker compose up --build -d
 
-# Run in background
-docker compose up -d
+# Check container status
+docker compose ps
+
+# View service logs
+docker compose logs -f
 ```
 
-Frontend will be accessible at `http://localhost:80` and backend at `http://localhost:8000`.
+Frontend is accessible at `http://localhost:80` and backend at `http://localhost:8000`.
 
 ---
 
-## Safety Model & Boundaries
+## Architecture
 
-BeyondArch is purposefully designed for defensive security analysts:
+```mermaid
+flowchart LR
+    subgraph Browser["Analyst Workstation (Browser Client)"]
+        UI["React 19 + TanStack Router"]
+        ENGINES["Client Forensics Engines<br/>PE Parser · Capa Engine · CyberChef<br/>Regex · Query Transpiler"]
+        STORAGE[("Analyst State Bus<br/>Session / Local / Ephemeral")]
+    end
 
-- **No Live Malware Detonation**: All file dissections (PE, Office, PDF) are performed statically. No hostile binary execution occurs.
-- **Safe Network Analysis**: PCAP inspections and stream followers analyze captured `.pcap` files without broadcasting hostile payloads onto your local network.
-- **Bounded Tooling**: Defense and containment scripts generate sanitized commands (iptables, PowerShell) for analyst review rather than unprompted background execution.
-- **No Deceptive Threat Intelligence**: External threat feeds are opt-in. When an external source is not configured, BeyondArch transparently communicates this rather than synthesizing fabricated reputations.
+    subgraph Host["Local Host Services (FastAPI)"]
+        API["FastAPI Loopback Server (:8000)"]
+        PYSIGMA["pySigma Transpiler Engine"]
+        SCAPY["Scapy PCAP Processing Engine"]
+    end
 
----
-
-## Privacy & Storage Modes
-
-You have complete control over how your analysis state is stored on your machine (configured in **Settings → Storage & Backup**):
-
-| Mode | Lifecycle | Best For |
-|---|---|---|
-| **Session Only** (Default) | In-memory and session storage; cleared automatically when the browser tab closes. | Daily production triage and sensitive evidence handling. |
-| **Persist** | Stored in browser `localStorage`; persists across browser restarts. | Multi-day case investigations and customized detection rules. |
-| **None** | Strictly transient; no investigation data or history is written to disk. | Ephemeral inspections and strict zero-trace requirements. |
-
-Full JSON workspace backups can be exported or imported at any time via the settings console.
-
----
-
-## Repo Layout
-
+    UI <--> ENGINES
+    UI <--> STORAGE
+    UI <-->|"127.0.0.1 Loopback Only"| API
+    API <--> PYSIGMA
+    API <--> SCAPY
 ```
-BeyondArch/
-├── frontend/                   React 19 + Vite 8 client application
-│   ├── src/
-│   │   ├── routes/             TanStack Router type-safe routed workspaces
-│   │   ├── components/         SOC UI components (Command Deck, SIEM, Dossiers, Modals)
-│   │   ├── lib/                Client engines (PE parser, Sigma tuner, timeline, handoff)
-│   │   ├── data/               MITRE ATT&CK data, detection library, case factories
-│   │   └── api/                Backend REST client connectors
-│   └── package.json            Dependencies and npm scripts
-├── backend/                    FastAPI analysis server
-│   ├── app/
-│   │   ├── routers/            Endpoints for PCAP, Sigma translation, and reputation
-│   │   └── services/           pySigma and Scapy analysis engines
-│   ├── requirements.txt        Python dependencies (fastapi, pysigma, scapy)
-│   └── pyproject.toml          Ruff and pytest configuration
-├── scripts/                    Setup utilities and terminal UI helpers
-├── install.sh / install.ps1    Cross-platform setup wizards
-├── run.sh / run.ps1            Launch scripts with frontend/backend flags
-├── doctor.sh / doctor.ps1      System health check diagnostics
-├── docker-compose.yml          Isolated container deployment
-└── README.md                   Project documentation
-```
+
+### Privacy & Storage Model
+All application state is configurable under **Settings → Storage & Privacy**:
+- **Session Only (Default)**: State lives in session memory and is destroyed when the browser tab closes.
+- **Persistent Mode**: State is stored in local browser storage (`localStorage`) across workstation restarts.
+- **Transient Mode**: Completely in-memory execution; leaves zero trace on local storage.
+- **Full Backup**: Export and import complete investigation workspaces as encrypted or raw JSON.
+
+### Security Guarantees
+- **Static Inspection**: All binary and script analyzers operate statically. Hostile code is never detonated or invoked.
+- **Safe Network Capture**: PCAP streams are parsed passively from dump files; no network packets are transmitted.
+- **No Third-Party Telemetry**: BeyondArch contains zero Google Analytics, tracking pixels, or remote call-home beacons.
 
 ---
 
 ## Quality Engineering & Verification
 
-BeyondArch enforces strict test coverage, zero-warning typechecking, and responsive layout invariants:
+The project is governed by strict test coverage and responsive invariants:
 
 ```bash
-# 1. Run full unit & integration test suite (87 files, 859 tests)
+# Run unit & integration test suites (87 test suites, 859 tests)
 npm run test --prefix frontend
 
-# 2. Run TypeScript compiler check
+# Verify TypeScript compilation
 npm run typecheck --prefix frontend
 
-# 3. Verify production bundle build
+# Run production asset build
 npm run build --prefix frontend
 
-# 4. Run system health diagnostics
-./doctor.sh
+# Run backend Python tests (224 tests)
+cd backend && pytest tests/ -v
 ```
 
-### Responsive Invariant Guarantee
-All workspaces are verified via Playwright to ensure **zero horizontal layout overflow** (`scrollWidth === clientWidth`) and zero runtime JavaScript exceptions across both **1440px desktop** and **390px mobile** viewports.
+All workspace views are verified to guarantee **zero horizontal scroll overflow** (`scrollWidth === clientWidth`) across both 1440px desktop displays and 390px mobile viewports.
 
 ---
 
-## Settings & Customization
+## Repository Layout
 
-BeyondArch includes an integrated theming engine tailored for long operational watch shifts:
-
-- **8 Hand-Crafted Themes**: Terminal Noir (default), SOC Console, Midnight Ops, Editorial Dark, Solar Flare, Synthwave Grid, Late Edition, and Broadsheet.
-- **16+ Accent Colors**: Emerald, Amber, Cyan, Rose, Sky, Violet, Indigo, and custom hex overrides.
-- **12+ Typography Pairs**: High-legibility monospaced fonts (JetBrains Mono, Fira Code, IBM Plex Mono, Space Grotesk, Inter).
-- **Density Controls**: Comfortable, Compact, or Ultra-Dense telemetry spacing.
-- **Custom Navigation**: Pin favorite tools, reorder functional blocks, or collapse sidebar groups.
-
----
-
-## FAQ
-
-**Does BeyondArch transmit my artifacts or logs to external servers?**  
-No. Analysis is performed strictly inside your browser and your local loopback FastAPI instance (`127.0.0.1`).
-
-**Can BeyondArch run without the Python backend?**  
-Yes. Running `./run.sh --frontend-only` launches the React workspace. All client-side analyzers (PE dissector, CyberChef, URL parser, timeline, case management, and regex playground) function completely offline. The Python backend is only needed for pySigma compilation and raw Scapy packet dissection.
-
-**Is browser storage secure enough for formal evidence custody?**  
-Browser storage is intended for active workspace convenience. For formal chain-of-custody preservation, export your case dossiers and timeline packages using the built-in JSON / Markdown export features.
-
-**Does BeyondArch replace a production SIEM or EDR?**  
-No. BeyondArch is an analyst-led triage and investigation workbench. It complements enterprise SIEMs (Splunk, Microsoft Sentinel, Elastic) by providing zero-friction triage, query cross-translation, and rule authoring before deploying detections to production fleets.
-
----
-
-## Contributing
-
-Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for development guidelines, coding standards, and our PR workflow.
-
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/sigma-enhancement`).
-3. Ensure all tests pass (`npm run test --prefix frontend` and `npm run typecheck --prefix frontend`).
-4. Commit your changes and open a Pull Request.
+```
+BeyondArch/
+├── frontend/                   React 19 client application
+│   ├── src/
+│   │   ├── routes/             TanStack Router routed workspace views
+│   │   ├── components/         Domain primitives, layout shells & modals
+│   │   ├── lib/                Forensic engines (PE, Sigma, PCAP, email, timeline)
+│   │   ├── data/               MITRE ATT&CK catalogs & detection fixtures
+│   │   └── api/                FastAPI client adapters
+│   └── package.json            Client dependencies and build scripts
+├── backend/                    FastAPI Python server
+│   ├── app/
+│   │   ├── routers/            REST routes for PCAP, Sigma, and threat lookups
+│   │   └── services/           pySigma and Scapy analysis engines
+│   ├── requirements.txt        Production Python requirements
+│   └── pyproject.toml          Ruff and Pytest configuration
+├── assets/                     Architecture diagrams, banner & vector graphics
+├── docs/                       Architecture decisions, specifications & roadmaps
+├── samples/                    Safe test logs, phishing emails & practice artifacts
+├── scripts/                    Platform installation, health check & UI helpers
+├── docker-compose.yml          Isolated multi-service deployment
+├── CONTRIBUTING.md             Contribution guidelines and standards
+├── SECURITY.md                 Security and responsible disclosure policy
+└── LICENSE                     MIT License
+```
 
 ---
 
 ## License
 
-BeyondArch is released under the **MIT License**. See [LICENSE](LICENSE) for details.
-
----
-
-<div align="center">
-
-Built for security analysts who demand local control, speed, and privacy.
-
-[Report Issue](https://github.com/kripy17/BeyondArch/issues) · [Request Feature](https://github.com/kripy17/BeyondArch/issues) · [Contributing Guide](CONTRIBUTING.md)
-
-</div>
+BeyondArch is open-source software licensed under the [MIT License](LICENSE).
