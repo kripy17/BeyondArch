@@ -1,8 +1,4 @@
 <div align="center">
-  <img src="assets/banner.svg" alt="BeyondArch Security Workbench" width="100%">
-</div>
-
-<div align="center">
 
 # BeyondArch
 
@@ -45,35 +41,6 @@ Defensive security workflows often force an unacceptable choice: manage heavy, f
 | **Memory Footprint** | Low local (heavy remote) | 16–32 GB RAM required | **~150 MB local footprint** |
 | **Workflow State** | Fragmented SaaS interfaces | Manual file sharing & scripts | **Single connected case & graph bus** |
 | **Query Flexibility** | Single proprietary syntax | Vendor-specific agents | **Multi-dialect (SPL ↔ KQL ↔ EQL ↔ VQL)** |
-
----
-
-## Screenshots
-
-<div align="center">
-<table>
-  <tr>
-    <td align="center" width="50%">
-      <img src="assets/screenshot-intake.svg" alt="Evidence Intake & Triage" width="100%"><br>
-      <b>Evidence Intake & Triage</b> — Multi-observable parser with defang controls
-    </td>
-    <td align="center" width="50%">
-      <img src="assets/screenshot-siem.svg" alt="SIEM Threat Hunting" width="100%"><br>
-      <b>SIEM Threat Hunting</b> — Cross-dialect query translation & facet filtering
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="50%">
-      <img src="assets/screenshot-detection.svg" alt="Detection Studio" width="100%"><br>
-      <b>Detection Studio</b> — Sigma, YARA & Suricata authoring with AST validation
-    </td>
-    <td align="center" width="50%">
-      <img src="assets/screenshot-case.svg" alt="Case Desk & Executive Dossier" width="100%"><br>
-      <b>Case Desk & Dossiers</b> — Attack timeline, MITRE coverage & CISO briefings
-    </td>
-  </tr>
-</table>
-</div>
 
 ---
 
@@ -278,7 +245,6 @@ BeyondArch/
 │   │   └── services/           pySigma and Scapy analysis engines
 │   ├── requirements.txt        Production Python requirements
 │   └── pyproject.toml          Ruff and Pytest configuration
-├── assets/                     Architecture diagrams, banner & vector graphics
 ├── docs/                       Architecture decisions, specifications & roadmaps
 ├── samples/                    Safe test logs, phishing emails & practice artifacts
 ├── scripts/                    Platform installation, health check & UI helpers
